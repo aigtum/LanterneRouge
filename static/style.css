@@ -1,0 +1,73 @@
+body {
+    font-family: 'Josefin Sans', sans-serif; 
+    background-size: 100%;
+    color: white;
+    
+    text-shadow: 2px 2px 0 black;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    
+}
+
+.roundCounter {
+    text-align: center;
+}
+
+
+.endRound {
+    width: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.roundBtn {
+    width: 6em;
+    height: 4em;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+
+.info {
+    text-align: center;
+}
+
+#report {
+    color: lightcoral;
+    background: black;
+}
+
+.cards {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: inline-flex;
+    margin-bottom: 2em;
+}
+
+.sCards {
+    float: left;
+    margin-right: 2em;
+    text-align:center;
+}
+
+.rCards {
+    float: right;
+    margin-left: 2em;
+    text-align:center;
+}
+
+.card {
+    font-family: 'Josefin Sans', sans-serif;
+    height: 3em;
+    width: 2em;
+    text-align: center;
+}
+

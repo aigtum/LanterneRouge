@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanterne Rouge</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="./static/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+
+    <script src="./p5/p5.min.js"></script>
+    <script src="./p5/addons/p5.dom.min.js"></script>
+    <script src="./p5/addons/p5.sound.min.js"></script>
+
+    <script src="main.js"></script>
+    <script src="track.js"></script>
+    <script src="rider.js"></script>
+    <script src="trackConfig.js"></script>
+</head>
+
+<body background="./static/flammerouge-featured.jpg">
+    <h1>LANTERNE ROUGE</h1>
+
+    <div class="endRound">
+        <h3 class="roundCounter" id="roundCounter"></h3>
+        <button class="roundBtn" onclick="endRound()">END TURN</button>
+    </div>
+    
+    <div class="cards">
+        <div class="sCards">
+            <h3 id="sInfo"></h3>
+            <button class="card" id="s0" onclick="getChoice('s', this.innerHTML)"></button>
+            <button class="card" id="s1" onclick="getChoice('s', this.innerHTML)"></button>
+            <button class="card" id="s2" onclick="getChoice('s', this.innerHTML)"></button>
+            <button class="card" id="s3" onclick="getChoice('s', this.innerHTML)"></button>
+        </div>
+        <div class="rCards">
+            <h3 id="rInfo"></h3>
+            <button class="card" id="r0" onclick="getChoice('r', this.innerHTML)"></button>
+            <button class="card" id="r1" onclick="getChoice('r', this.innerHTML)"></button>
+            <button class="card" id="r2" onclick="getChoice('r', this.innerHTML)"></button>
+            <button class="card" id="r3" onclick="getChoice('r', this.innerHTML)"></button>
+        </div>
+    </div>
+    
+    <div class="info">
+        <div id="report"></div>
+        <div id="finalResult"></div>
+    </div>
+
+</body>
+
+</html>
