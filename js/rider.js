@@ -27,7 +27,7 @@ class Rider {
         if (this.pos[0] > track.length-6) {
             this.finished = true;
             //track.matrix[this.pos[0]] = ["_", "_"];
-            //sout(">>>>> " + this.name + " finished!" + this.pos);
+            sout(">>>>> " + this.name + " finished!" + this.pos);
         }
         //sout(track.matrix);
     }
@@ -59,16 +59,13 @@ class Rider {
         var newPos = [currPos + parseInt(steps), 0];
         var emptyPos = this.checkBusy(newPos, riders);
 
-        sout("> " + emptyPos + ", " + track.length);
+        sout("> " + emptyPos[0] + ", " + track.length);
 
-        if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {
+        if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {     // if the rider is not finished
             track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
             this.pos = emptyPos;
-        } else {
-            emptyPos = this.checkBusy([track.length-1, 0], riders);
-            //sout(">> New empty pos: " + emptyPos);
-            track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
-            this.pos = emptyPos;
+        } else if (emptyPos[0] < this.pos[0]) {         // if the rider is placed backwards
+            // do nothing, keep the rider in place
         }
         this.checkFinished(track);
     }

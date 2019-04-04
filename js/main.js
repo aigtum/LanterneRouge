@@ -27,6 +27,8 @@ var roundFinished;
 var userDoneS = false, userDoneR = false;
 var sDone = false, rDone = false;
 var turn;
+// html elements
+var endTurnBtn;
 
 /**
  * Helper functions
@@ -77,6 +79,7 @@ function setup() {
 }
 
 function draw() {
+  disableTurnBtn();
   track.show(riders);
   update();
 }
@@ -116,6 +119,7 @@ function newGame() {
   muscleRouleur2 = shuffle(muscleRouleur2);
 
   track = new Track(5, 5, trackLength);
+  endTurnBtn = document.getElementById("endTurnBtn");
 
   // red team
   rr = new Rider("Red R",track.x,track.y,"red","r",[2, 1],rouleur,"player");
@@ -187,6 +191,14 @@ function endRound() {
       putHandInDeck(rHand, rouleur);
       newRound();
     }, 6700);
+  }
+}
+
+function disableTurnBtn() {
+  if (!userDoneR && !userDoneS) {
+    endTurnBtn.disabled = true;
+  } else {
+    endTurnBtn.disabled = false;
   }
 }
 
@@ -381,14 +393,14 @@ function getChoice(rider, move) {
     sHand.splice(sHand.indexOf(parseInt(move)), 1);
     rs.move(move, riders, track);
     hideCards(sprinteur);
-    sout(sHand + ": " + sprinteur);
+    //sout(sHand + ": " + sprinteur);
     //sprinteur.push(sHand);
     userDoneS = true;
   } else if (rider == "r") {
     rHand.splice(rHand.indexOf(parseInt(move)), 1);
     rr.move(move, riders, track);
     hideCards(rouleur);
-    sout(rHand + ": " + rouleur); 
+    //sout(rHand + ": " + rouleur); 
     //rouleur.push(rHand);
     userDoneR = true;
   }
