@@ -121,8 +121,8 @@ function newGame() {
   endTurnBtn = document.getElementById("endTurnBtn");
 
   // red team
-  rr = new Rider("Red R",track.x,track.y,"red","r",[2, 1],rouleur,"player");
-  rs = new Rider("Red S",track.x,track.y,"red","s",[71, 1],sprinteur,"player");
+  rr = new Rider("Red R",track.x,track.y,"red","r",[72, 1],rouleur,"player");
+  rs = new Rider("Red S",track.x,track.y,"red","s",[72, 0],sprinteur,"player");
 
   // blue team
   br = new Rider("Blue R",track.x,track.y,"lightblue","r",[4, 0],rouleur,"peloton");
@@ -171,12 +171,14 @@ function endRound() {
   //sout(track.matrix);
   if (!checkUserDone()) {
     alert("You have not moved all of your available riders!");
+    return;
   } else {
+    sout("_________________\nRound ended\n_________________");
     endTurnBtn.disabled = true;
     riders = getRiderOrder();
     moveAIRecursive(0).then(() => {
       checkFinished();
-      sleep(2000).then(() => {
+      sleep(1000).then(() => {
         updateDraft(0).then(() =>  {
           checkFatigue();
           putHandInDeck(sHand, sprinteur);

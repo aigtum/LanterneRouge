@@ -33,7 +33,7 @@ class Rider {
     }
 
     checkBusy(pos, riders) {
-        //console.log("> Checking: " + pos);
+        console.log("> Checking: " + pos);
         var counter = 0;
         for (var i = 0; i < riders.length; i++) {
             //console.log(i + " riders position: " + riders[i].pos + " own position: " + pos);
@@ -66,7 +66,7 @@ class Rider {
         if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {     // if the rider is not finished
             track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
             this.pos = emptyPos;
-        } else if (emptyPos[0] > track.length) {        // if the rider is ouside of the track
+        } else if (emptyPos[0] >= track.length) {        // if the rider is ouside of the track
             emptyPos = this.checkBusy([track.length-1, 0], riders);
             this.pos = emptyPos;
         } else if (emptyPos[0] < this.pos[0]) {         // if the rider is placed backwards
