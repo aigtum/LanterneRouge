@@ -79,7 +79,6 @@ function setup() {
 }
 
 function draw() {
-  disableTurnBtn();
   track.show(riders);
   update();
 }
@@ -123,7 +122,7 @@ function newGame() {
 
   // red team
   rr = new Rider("Red R",track.x,track.y,"red","r",[2, 1],rouleur,"player");
-  rs = new Rider("Red S",track.x,track.y,"red","s",[1, 1],sprinteur,"player");
+  rs = new Rider("Red S",track.x,track.y,"red","s",[71, 1],sprinteur,"player");
 
   // blue team
   br = new Rider("Blue R",track.x,track.y,"lightblue","r",[4, 0],rouleur,"peloton");
@@ -165,6 +164,7 @@ function newRound() {
   drawCards(rouleur);
   turn++;
   showTurn();
+  endTurnBtn.disabled = false;
 }
 
 function endRound() {
@@ -172,30 +172,27 @@ function endRound() {
   if (!checkUserDone()) {
     alert("You have not moved all of your available riders!");
   } else {
+    endTurnBtn.disabled = true;
     riders = getRiderOrder();
-    setTimeout(function() {
-      moveAI();
-    }, 100);
-    setTimeout(function() {
+    moveAIRecursive(0).then(() => {
       checkFinished();
-    }, 5000);
-    
-    setTimeout(function() {
-      updateDraft();
-    }, 6000);
-    setTimeout(function() {
-      checkFatigue()
-    }, 6500);
-    setTimeout(function() {
-      putHandInDeck(sHand, sprinteur);
-      putHandInDeck(rHand, rouleur);
-      newRound();
-    }, 6700);
+      sleep(2000).then(() => {
+        updateDraft(0).then(() =>  {
+          checkFatigue();
+          putHandInDeck(sHand, sprinteur);
+          putHandInDeck(rHand, rouleur);
+          newRound();
+        });
+      })
+    });
   }
 }
 
 function disableTurnBtn() {
-  if (!userDoneR && !userDoneS) {
+  if (sDone && rDone) {
+    endTurnBtn.disabled = false;
+  }
+  else if (!userDoneR && !userDoneS) {
     endTurnBtn.disabled = true;
   } else {
     endTurnBtn.disabled = false;
@@ -225,31 +222,26 @@ function checkUserDone() {
  * MOVEMENT
  */
 
-function moveAI() {
+function moveAIRecursive(index) {
   peloCard = drawOneCard(peloton);
-  var promises = [];
-  sout("------>"  + promises.length)
-  
-  riders.forEach(function(el, index) {
-    if (el.control == "player") {
+  if (index == riders.length)  {
+    return Promise.resolve();
+  } else if (riders[index].control == "player") {
+    return moveAIRecursive(index+1);
+  } else {
+    //sout("-> " + riders[index].name);
+    return new Promise((resolve, reject) => {
       setTimeout(function() {
-        //sout("skipping user move");
-        promises.push("1");
-      }, 0)
-    } else {
-      //sout("-> " + el.name);
-      setTimeout(function() {
-        moveSingleAI(el);
-        promises.push("1");
-      }, index * 700)
-    }
-  });
+        moveSingleAI(riders[index]);
+        moveAIRecursive(index+1).then(() => { resolve(); });
+      }, 1000)
+    })
+  }
 }
 
 function moveSingleAI(r) {
   var sCard;
   var rCard;
-  //sout("-> " + r.name);
 
   if (r.control == "muscle1" && r.role == "s") {
     sCard = drawOneCard(muscleSprinteur1);
@@ -264,7 +256,7 @@ function moveSingleAI(r) {
     rCard = drawOneCard(muscleRouleur2);
     r.move(rCard, riders, track);
   } else if (r.control == "peloton") {
-    sout(">>>>>> " + r.name + ": " + peloCard);
+    //sout(">>>>>> " + r.name + ": " + peloCard);
     if (peloCard == 92) {
       sout("Peloton: ATTACK!");
       if (r.role == "r") {
@@ -279,13 +271,19 @@ function moveSingleAI(r) {
   }
 }
 
-function updateDraft() {
-  sout("-> updatig draft");
-  for (var i = 0; i < riders.length; i++) {
-    if (checkDraft()) {
+function updateDraft(index) {
+  sout("-> updating draft");
+  if (index == riders.length) {
+    return Promise.resolve();
+  } else {
+    return new Promise((resolve, reject) => {
+      checkDraft().then(() => {
       moveDraft();
-    }
+        updateDraft(index + 1).then(() => { resolve(); });
+      })
+    })
   }
+  
 }
 
 function checkDraft() {
@@ -295,7 +293,7 @@ function checkDraft() {
       draft.push(r);
     }
   });
-  return true;
+  return Promise.resolve();
 }
 
 function moveDraft() {
@@ -325,8 +323,6 @@ function checkFatigue() {
   });
   addToReport(report);
 }
-
-
 
 
 /**
@@ -394,14 +390,12 @@ function getChoice(rider, move) {
     rs.move(move, riders, track);
     hideCards(sprinteur);
     //sout(sHand + ": " + sprinteur);
-    //sprinteur.push(sHand);
     userDoneS = true;
   } else if (rider == "r") {
     rHand.splice(rHand.indexOf(parseInt(move)), 1);
     rr.move(move, riders, track);
     hideCards(rouleur);
     //sout(rHand + ": " + rouleur); 
-    //rouleur.push(rHand);
     userDoneR = true;
   }
 }
@@ -430,8 +424,6 @@ function fillUpCards() {
 }
 
 
-
-
 function getRiderOrder() {
   var order = [];
   for (var i = track.length-1; i > 0; i--) {
@@ -448,6 +440,7 @@ function getRiderOrder() {
 
 function checkFinished() {
   var f = document.getElementById("finalResult");
+
   for (var i = track.length-1; i > track.length - 6; i--) {
     for (var j = 0; j < 2; j++) {
       riders.forEach(rider => {

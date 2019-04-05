@@ -54,26 +54,25 @@ class Rider {
     }
 
     move(steps, riders, track) {
+        sout("Moving: " + this.name + ", " + steps);
+
         var currPos = parseInt(this.pos[0]);
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
         var newPos = [currPos + parseInt(steps), 0];
         var emptyPos = this.checkBusy(newPos, riders);
 
-        sout("> " + emptyPos[0] + ", " + track.length);
+        //sout("> " + emptyPos[0] + ", " + track.length);
 
         if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {     // if the rider is not finished
             track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
+            this.pos = emptyPos;
+        } else if (emptyPos[0] > track.length) {        // if the rider is ouside of the track
+            emptyPos = this.checkBusy([track.length-1, 0], riders);
             this.pos = emptyPos;
         } else if (emptyPos[0] < this.pos[0]) {         // if the rider is placed backwards
             // do nothing, keep the rider in place
         }
         this.checkFinished(track);
-    }
-
-    drawMovement(newPos) {
-        while (this.pos[0] <= newPos[0]) {
-            this.pos[0]++;
-        }
     }
 
     show(x, y) {
