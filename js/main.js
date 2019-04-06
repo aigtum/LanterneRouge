@@ -152,6 +152,10 @@ function newGame() {
 function newRound() {
   //sout(">>" + sprinteur + "/" + sprinteur.length);
   //sout(">>" + rouleur + "/" + rouleur.length);
+  if (riders.length == 0) {
+    alert("Round finshed: " + ridersFinished[0].name + " has won!");
+    gameFinished = true;
+  } 
   sHand = [], rHand = [];
   roundPositions = [];
   draft = [];
@@ -169,12 +173,15 @@ function newRound() {
 
 function endRound() {
   //sout(track.matrix);
+  
   if (!checkUserDone()) {
     alert("You have not moved all of your available riders!");
     return;
   } else {
     sout("_________________\nRound ended\n_________________");
     endTurnBtn.disabled = true;
+    peloCard = drawOneCard(peloton);
+
     riders = getRiderOrder();
     moveAIRecursive(0).then(() => {
       checkFinished();
@@ -225,7 +232,6 @@ function checkUserDone() {
  */
 
 function moveAIRecursive(index) {
-  peloCard = drawOneCard(peloton);
   if (index == riders.length)  {
     return Promise.resolve();
   } else if (riders[index].control == "player") {
