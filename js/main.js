@@ -117,12 +117,13 @@ function newGame() {
   muscleSprinteur2 = shuffle(muscleSprinteur2);
   muscleRouleur2 = shuffle(muscleRouleur2);
 
-  track = new Track(5, 5, trackLength);
+  //track = new Track(5, 5, trackLength, classic);
+  track = new Track(5, 5, trackLength, firenze_milano);
   endTurnBtn = document.getElementById("endTurnBtn");
 
   // red team
-  rr = new Rider("Red R",track.x,track.y,"red","r",[72, 1],rouleur,"player");
-  rs = new Rider("Red S",track.x,track.y,"red","s",[72, 0],sprinteur,"player");
+  rr = new Rider("Red R",track.x,track.y,"red","r",[19, 0],rouleur,"player");
+  rs = new Rider("Red S",track.x,track.y,"red","s",[19, 1],sprinteur,"player");
 
   // blue team
   br = new Rider("Blue R",track.x,track.y,"lightblue","r",[4, 0],rouleur,"peloton");
@@ -297,7 +298,7 @@ function updateDraft(index) {
 function checkDraft() {
   draft = [];
   riders.forEach(r => {
-    if ((track.matrix[r.pos[0] + 2][0] == "x") && track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt) {
+    if ((track.matrix[r.pos[0] + 2][0] == "x") && track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt && track.getTile(r.pos[0]+2, 0).type != "u") {
       draft.push(r);
     }
   });

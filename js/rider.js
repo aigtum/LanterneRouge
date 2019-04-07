@@ -59,21 +59,34 @@ class Rider {
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
         var newPos = [currPos + parseInt(steps), 0];
         var emptyPos = this.checkBusy(newPos, riders);
+        if (this.pos[0] + steps < track.length-1) {
+            var typeOfTiles = track.getTileTypes(this.pos[0], steps);
+        } else {
+            var typeOfTiles = track.getTileTypes(this.pos[0], track.length-this.pos[0]);
+        }
+        sout("Tile types: " + typeOfTiles);
         
         //sout("> " + emptyPos[0] + ", " + track.length);
-        
-        if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {     // if the rider is not finished
+        if (emptyPos[0] > track.length-1) {        // if the rider is ouside of the track
+            sout(">> endoftrack: rider outside of track");
+            this.move(track.length-this.pos[0]-1, riders, track);
+        } else if (typeOfTiles.indexOf('u') != -1 && steps > 5) {        // if riders pass uphill
+            sout(">> uphill: move max 5");
+            this.move(5, riders, track);
+        } else if (track.getTile(this.pos[0], this.pos[1]).type == 'd' && steps < 5) {         // if riders are on downhill
+            sout(">> downhill: move min 5");
+            this.move(5, riders, track);
+        } else if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {     // if the rider is not finished
+            sout(">> normal: rider not finished");
             track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
             this.pos = emptyPos;
-        } else if (emptyPos[0] >= track.length) {        // if the rider is ouside of the track
-            emptyPos = this.checkBusy([track.length-1, 0], riders);
-            track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
-            this.pos = emptyPos;
-        } else if (emptyPos[0] < this.pos[0]) {         // if the rider is placed backwards
+        } 
+         else if (emptyPos[0] < this.pos[0]) {         // if the rider is placed backwards
             // do nothing, keep the rider in place
+            this.move(0, riders, track);
         }
         this.checkFinished(track);
-        sout("__________" + "\n" + track.matrix +"\n__________");
+        //sout("__________" + "\n" + track.matrix +"\n__________");
     }
 
     show(x, y) {
