@@ -5,10 +5,15 @@
 class Rider {
     width = 26;
     height = 16;
+    
+    choice = -1;
+    hand = [];
+    color;
 
-    constructor(name, x, y, color, role, pos, cards, control) {
+    constructor(id, teamid, name, x, y, role, pos, cards, control) {
+        this.id = id;
+        this.teamid = teamid;
         this.name = name;
-        this.color = color;
         this.x = x;
         this.y = y;
         this.role = role;
@@ -16,6 +21,11 @@ class Rider {
         this.cards = cards;
         this.control = control;
         this.finished = false;
+        this.deck = new Cards(cards);
+    }
+
+    getNewHand() {
+        this.hand = this.deck.drawCards();
     }
 
     moveDown(pos, track) {
@@ -30,6 +40,17 @@ class Rider {
             sout(">>>>> " + this.name + " finished!" + this.pos);
         }
         //sout(track.matrix);
+    }
+
+    setChoice(choice) {
+        this.choice = choice;
+    }
+
+    getChoice() {
+        if (control == "player"){
+            this.choice = deck.drawOneCard()
+        }
+        return this.choice
     }
 
     checkBusy(pos, riders) {

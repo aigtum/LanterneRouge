@@ -18,6 +18,12 @@
     <script src="./p5/addons/p5.dom.min.js"></script>
     <script src="./p5/addons/p5.sound.min.js"></script>
 
+
+    <script src="./js/gui.js"></script>
+    <script src="./js/controller.js"></script>
+    <script src="./js/cards.js"></script>
+    <script src="./js/ai.js"></script>
+    <script src="./js/model.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/track.js"></script>
     <script src="./js/rider.js"></script>
@@ -35,19 +41,21 @@
     <div class="cards">
         <div class="sCards">
             <h3 id="sInfo"></h3>
-            <button class="card" id="s0" onclick="getChoice('s', this.innerHTML)"></button>
-            <button class="card" id="s1" onclick="getChoice('s', this.innerHTML)"></button>
-            <button class="card" id="s2" onclick="getChoice('s', this.innerHTML)"></button>
-            <button class="card" id="s3" onclick="getChoice('s', this.innerHTML)"></button>
+            <button class="card" id="s0" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="s1" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="s2" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="s3" onclick="getPlayerChoice(1, this.innerHTML)"></button>
         </div>
         <div class="rCards">
             <h3 id="rInfo"></h3>
-            <button class="card" id="r0" onclick="getChoice('r', this.innerHTML)"></button>
-            <button class="card" id="r1" onclick="getChoice('r', this.innerHTML)"></button>
-            <button class="card" id="r2" onclick="getChoice('r', this.innerHTML)"></button>
-            <button class="card" id="r3" onclick="getChoice('r', this.innerHTML)"></button>
+            <button class="card" id="r0" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="r1" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="r2" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="r3" onclick="getPlayerChoice(2, this.innerHTML)"></button>
         </div>
     </div>
+
+    <div id="gameBoard"></div>
     
     <div class="info">
         <div id="report"></div>
