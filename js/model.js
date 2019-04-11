@@ -34,11 +34,11 @@ var humanChoices = 0;
 
 // get choice from html button
 function getPlayerChoice(riderID, move) {
-    choices[riderID-1] = move
     // put new choice into choices
     var riderObj = getRiderById(riderID);
     riderObj.setChoice(move);
     // TODO hide cards from GUI
+    hideCards(riderObj.cards);
     humanChoices++;
 
     //check if both choices are down -> execute round
@@ -46,7 +46,7 @@ function getPlayerChoice(riderID, move) {
         var riderOrder = getRiderOrder();
         for (rider of riderOrder) {
             if (rider.control == "player") {
-                move(rider.choice, riders, track);
+                rider.move(rider.choice, riders, track);
             }
         }
 
@@ -64,34 +64,63 @@ function getPlayerChoice(riderID, move) {
 function newGame() {
 	//track = new Track(5, 5, trackLength, classic);
 	track = new Track(5, 5, trackLength, firenze_milano);
-	endTurnBtn = document.getElementById("endTurnBtn");
 
 	// red team
-	riders.push(new Rider(1,2, "Red R", track.x, track.y, "r", [19, 0], "rouleur", "player"));
-	riders.push(new Rider(2,1, "Red S", track.x, track.y, "s", [19, 1], "sprinteur", "player"));
+	riders.push(new Rider(1, 1, "Red R", track.x, track.y, "r", [19, 0], "rouleur", "player"));
+    riders.push(new Rider(2, 1, "Red S", track.x, track.y, "s", [19, 1], "sprinteur", "player"));
 
 	// blue team
-	riders.push(new Rider(3,4, "Blue R", track.x, track.y, "r", [4, 0], "peloton", "peloton"));
-	riders.push(new Rider(4,3, "Blue S", track.x, track.y, "s", [3, 0], "peloton", "peloton"));
+	riders.push(new Rider(3, 2, "Blue R", track.x, track.y, "r", [4, 0], "peloton", "peloton"));
+	riders.push(new Rider(4, 2, "Blue S", track.x, track.y, "s", [3, 0], "peloton", "peloton"));
 
 	// green team
-	riders.push(new Rider(5,6, "Green R", track.x, track.y, "r", [3, 1], "muscleRouleur", "muscle1"));
-	riders.push(new Rider(6,5, "Green S", track.x, track.y, "s", [4, 1], "muscleSprinteur", "muscle1"));
+	riders.push(new Rider(5, 3, "Green R", track.x, track.y, "r", [3, 1], "muscleRouleur", "muscle1"));
+	riders.push(new Rider(6, 3, "Green S", track.x, track.y, "s", [4, 1], "muscleSprinteur", "muscle1"));
 
 	// pink team
-	riders.push(new Rider(7,8, "Pink R", track.x, track.y, "r", [1, 0], "rouleur", "muscle2"));
-	riders.push(new Rider(8,7, "Pink S", track.x, track.y, "s", [2, 0], "sprinteur", "muscle2"));
+	riders.push(new Rider(7, 4, "Pink R", track.x, track.y, "r", [1, 0], "rouleur", "muscle2"));
+	riders.push(new Rider(8, 4, "Pink S", track.x, track.y, "s", [2, 0], "sprinteur", "muscle2"));
 
     turn = 0;
     setColor(riders);
-
+    getPlayerRiders();
 	newRound();
+    
 }
+
+
+function newRound() {
+	//sout(">>" + sprinteur + "/" + sprinteur.length);
+	//sout(">>" + rouleur + "/" + rouleur.length);
+	if (riders.length == 0) {
+		alert("Game finished: " + ridersFinished[0].name + " has won!");
+		gameFinished = true;
+	}
+	sHand = [], rHand = [];
+	roundPositions = [];
+	draft = [];
+	roundFinished = false;
+	//fillUpCards();
+	//addToElement("sInfo", "Sprinteur (" + sprinteur.length + ")");
+	//addToElement("rInfo", "Rouleur (" + rouleur.length + ")");
+    showRiderInfo();
+	for (rider of riders) {
+        if (rider.control == "player") {
+            rider.getNewHand();
+        } else {
+            rider.getNewCard();
+        }
+	}
+	addToHand();
+	turn++;
+	showTurn();
+}
+
 
 function endRound() {
     //sout(track.matrix);
     sout("_________________\nRound ended\n_________________");
-    peloCard = drawOneCard(peloton);
+    //peloCard = drawOneCard(peloton);
 
     riders = getRiderOrder();
     moveAIRecursive(0).then(() => {
@@ -99,8 +128,8 @@ function endRound() {
         sleep(1000).then(() => {
             updateDraft(0).then(() =>  {
                 checkFatigue();
-                putHandInDeck(sHand, sprinteur);
-                putHandInDeck(rHand, rouleur);
+                //putHandInDeck(sHand, sprinteur);
+                //putHandInDeck(rHand, rouleur);
                 newRound();
             });
         })

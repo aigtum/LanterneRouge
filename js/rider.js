@@ -28,6 +28,14 @@ class Rider {
         this.hand = this.deck.drawCards();
     }
 
+    getNewCard() {
+        this.choice = this.deck.drawOneCard();
+    }
+
+    addCards(cards) {
+        this.deck.addCardsToDeck(cards);
+    }
+
     moveDown(pos, track) {
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];    
         this.pos = [pos[0], 0];
@@ -42,8 +50,12 @@ class Rider {
         //sout(track.matrix);
     }
 
+    // TODO: put cards back in deck
     setChoice(choice) {
         this.choice = choice;
+
+
+        sout("Choice hand" + this.hand)
     }
 
     getChoice() {

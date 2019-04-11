@@ -35,32 +35,37 @@
 
     <div class="endRound">
         <h3 class="roundCounter" id="roundCounter"></h3>
-        <button class="roundBtn" id="endTurnBtn" onclick="endRound()">END TURN</button>
     </div>
     
     <div class="cards">
         <div class="sCards">
             <h3 id="sInfo"></h3>
-            <button class="card" id="s0" onclick="getPlayerChoice(1, this.innerHTML)"></button>
-            <button class="card" id="s1" onclick="getPlayerChoice(1, this.innerHTML)"></button>
-            <button class="card" id="s2" onclick="getPlayerChoice(1, this.innerHTML)"></button>
-            <button class="card" id="s3" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="s0" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="s1" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="s2" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="s3" onclick="getPlayerChoice(2, this.innerHTML)"></button>
         </div>
         <div class="rCards">
             <h3 id="rInfo"></h3>
-            <button class="card" id="r0" onclick="getPlayerChoice(2, this.innerHTML)"></button>
-            <button class="card" id="r1" onclick="getPlayerChoice(2, this.innerHTML)"></button>
-            <button class="card" id="r2" onclick="getPlayerChoice(2, this.innerHTML)"></button>
-            <button class="card" id="r3" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+            <button class="card" id="r0" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="r1" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="r2" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+            <button class="card" id="r3" onclick="getPlayerChoice(1, this.innerHTML)"></button>
         </div>
     </div>
-
-    <div id="gameBoard"></div>
     
     <div class="info">
         <div id="report"></div>
         <div id="finalResult"></div>
     </div>
+    
+    <div id="gameBoard"></div>
+    
+    <div class="info">
+        <div id="finalResult"></div>
+    </div>
+    
+    
 
 </body>
 

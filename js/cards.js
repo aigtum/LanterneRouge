@@ -4,17 +4,6 @@ class Cards {
     rHand = [];
     peloCard;
     // TODO: riders of peloton should have a shared deck!
-
-    shuffle() {
-        var j, x, i;
-        for (i = this.deck.length - 1; i > 0; i--) {
-            j = Math.floor(Math.random() * (i + 1));
-            x = this.deck[i];
-            this.deck[i] = this.deck[j];
-            this.deck[j] = x;
-        }
-    }
-
     constructor(type) {
         this.type = type;
         if (this.type == 'rouleur') {
@@ -31,6 +20,19 @@ class Cards {
         this.shuffle();
     }
 
+    shuffle() {
+        var j, x, i;
+        for (i = this.deck.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = this.deck[i];
+            this.deck[i] = this.deck[j];
+            this.deck[j] = x;
+        }
+    }
+
+    addCardsToDeck(cards) {
+        this.deck.push(cards);
+    }
 
     drawOneCard() {
         var result = this.deck.pop();
@@ -41,7 +43,7 @@ class Cards {
     drawCards() {   
         var hand = [];     
         for (var i = 0; i < 4; i++) {
-            this.hand.push(this.deck[i]);
+            hand.push(this.deck[i]);
         }
         this.deck.splice(0, 4);
         return hand;

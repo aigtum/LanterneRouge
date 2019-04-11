@@ -21,75 +21,6 @@ const sleep = (milliseconds) => {
 	return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-function addToReport(text) {
-	var el = document.getElementById("report");
-	el.innerHTML = text;
-}
-
-function addToElement(elem, text) {
-	var el = document.getElementById(elem);
-	el.innerHTML = text;
-}
-
-function showTurn() {
-	var el = document.getElementById("roundCounter");
-	el.innerHTML = "Turn " + turn;
-}
-
-function sout(text) {
-	console.log(text);
-}
-
-function update() {
-	riders.forEach(r => {
-		if (track.matrix[r.pos[0]][0] != "x" && r.pos[1] == 1) {
-			r.moveDown(r.pos, track);
-		}
-	});
-}
-
-
-
-function newRound() {
-	sout(standing);
-	//sout(">>" + sprinteur + "/" + sprinteur.length);
-	//sout(">>" + rouleur + "/" + rouleur.length);
-	if (riders.length == 0) {
-		alert("Game finished: " + ridersFinished[0].name + " has won!");
-		gameFinished = true;
-	}
-	sHand = [], rHand = [];
-	roundPositions = [];
-	draft = [];
-	userDoneS = false, userDoneR = false;
-	roundFinished = false;
-	//fillUpCards();
-	//addToElement("sInfo", "Sprinteur (" + sprinteur.length + ")");
-	//addToElement("rInfo", "Rouleur (" + rouleur.length + ")");
-	
-	turn++;
-	showTurn();
-}
-
-
-function checkUserDone() {
-	if (sDone && rDone) {
-		sprinteur = [];
-		rouleur = [];
-		return "both";
-	} else if (sDone && userDoneR) {
-		sprinteur = [];
-		return "s";
-	} else if (rDone && userDoneS) {
-		rouleur = [];
-		return "r";
-	} else if (userDoneS && userDoneR) {
-		return "round";
-	} else {
-		return false;
-	}
-}
-
 
 /*
  * MOVEMENT
@@ -114,16 +45,16 @@ function moveAIRecursive(index) {
 }
 
 function moveSingleAI(r) {
-
+	sout("Rider choice: " + r.choice);
 	if(r.choice == 92){
 		sout("Peloton: ATTACK!");
 		if (r.role == "r"){
 			r.move(2, riders, track);
-			getRiderById(r.teamID).move(9, riders, track);
+			//getRiderById(r.teamID).move(9, riders, track);
 		}
 		else if (r.role == "s"){
 			r.move(9, riders, track);
-			getRiderById(r.teamID).move(2, riders, track);
+			//getRiderById(r.teamID).move(2, riders, track);
 		} 
 	}else{
 		r.move(r.choice, riders, track);
@@ -167,19 +98,16 @@ function moveDraft() {
 function checkFatigue() {
 	sout("-> checkig fatigue");
 	var report = "";
-	var racers = getRiderOrder();
-	racers.forEach(r => {
-		if (r.control == "player") {
-			if (track.matrix[r.pos[0] + 2][0] != "x" && track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt) {
-				if (r.role == "s") {
-					report += "Sprinteur received a fatigue card! "
-					sprinteur.push('f');
-				}
-				if (r.role == "r") {
-					report += "Rouleur received a fatigue card! "
-					rouleur.push('f');
-				}
+	//var racers = getRiderOrder();
+	human.forEach(r => {	
+		if (track.matrix[r.pos[0] + 2][0] != "x" && track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt) {
+			if (r.role == "s") {
+				report += "Sprinteur received a fatigue card! "
 			}
+			if (r.role == "r") {
+				report += "Rouleur received a fatigue card! "
+			}
+			r.addCards('f');
 		}
 	});
 	addToReport(report);
@@ -190,15 +118,7 @@ function checkFatigue() {
  * 
  * CARDS
  */
-function hideCards(type) {
-	for (var i = 0; i < 4; i++) {
-		if (type == sprinteur) {
-			showHand("s", [], i);
-		} else {
-			showHand("r", [], i);
-		}
-	}
-}
+
 
 
 function putHandInDeck(hand, type) {
