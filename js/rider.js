@@ -33,7 +33,13 @@ class Rider {
     }
 
     addCards(cards) {
-        this.deck.addCardsToDeck(cards);
+        if (cards.length == 1) {
+            this.deck.addCardsToDeck(cards);
+        } else {
+            for (c of cards) {
+                this.deck.addCardsToDeck(c);
+            }
+        }
     }
 
     moveDown(pos, track) {
@@ -54,8 +60,11 @@ class Rider {
     setChoice(choice) {
         this.choice = choice;
 
-
         sout("Choice hand" + this.hand)
+        this.hand.splice(this.hand.indexOf(choice)-1, 1);
+        sout("Splice hand" + this.hand + "/" + choice)
+        
+        this.addCards(this.hand);
     }
 
     getChoice() {

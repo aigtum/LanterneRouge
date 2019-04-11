@@ -151,12 +151,6 @@ function checkFinished() {
 		for (var j = 0; j < 2; j++) {
 			riders.forEach(rider => {
 				if (rider.pos[0] == i && rider.pos[1] == j) {
-					if (rider.control == "player" && rider.role == "s") {
-						sDone = true;
-					} else if (rider.control == "player" && rider.role == "r") {
-						rDone = true;
-					}
-
 					ridersFinished.push(rider);
 					f.innerHTML += "| " + ridersFinished.length + ": " + rider.name + " (" + turn + ")" + " |";
 					removeFinished(rider);

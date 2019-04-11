@@ -63,7 +63,8 @@ function getPlayerChoice(riderID, move) {
 
 function newGame() {
 	//track = new Track(5, 5, trackLength, classic);
-	track = new Track(5, 5, trackLength, firenze_milano);
+	//track = new Track(5, 5, trackLength, firenze_milano);
+	track = new Track(5, 5, trackLength, ronde);
 
 	// red team
 	riders.push(new Rider(1, 1, "Red R", track.x, track.y, "r", [19, 0], "rouleur", "player"));
