@@ -1,6 +1,16 @@
 /* jslint esversion: 6 */
 
 /**
+ * BUGS:
+ * 
+ * - draft downhill sometimes pushes too far
+ * - cant move the other after one of the riders is finished
+ * - riders change color 
+ */
+
+
+
+/**
  * Setup:
  * 1) Set up board
  * 2) put riders in their places
@@ -81,7 +91,11 @@ function updateDraft(index) {
 function checkDraft() {
 	draft = [];
 	riders.forEach(r => {
-		if ((track.matrix[r.pos[0] + 2][0] == "x") && track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt && track.getTile(r.pos[0] + 2, 0).type != "u") {
+		if ((track.matrix[r.pos[0] + 2][0] == "x")
+		&& track.matrix[r.pos[0] + 1][0] != "x"
+		&& r.pos[0] < finishLineAt 
+		&& track.getTile(r.pos[0] + 2, 0).type != "u"
+		&& track.getTile(r.pos[0],0).type != "u") {
 			draft.push(r);
 		}
 	});
@@ -100,7 +114,7 @@ function checkFatigue() {
 	var report = "";
 	//var racers = getRiderOrder();
 	human.forEach(r => {	
-		if (track.matrix[r.pos[0] + 2][0] != "x" && track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt) {
+		if (track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt) {
 			if (r.role == "s") {
 				report += "Sprinteur received a fatigue card! "
 			}
@@ -126,8 +140,6 @@ function putHandInDeck(hand, type) {
 		type.push(hand[i]);
 	}
 }
-
-
 
 
 function getRiderOrder() {
@@ -161,6 +173,11 @@ function checkFinished() {
 }
 
 function removeFinished(rider) {
+	if (rider.control == "player") {
+		riders.splice(riders.indexOf(rider), 1);	
+		human.splice(human.indexOf(rider), 1);	
+	} else {
+		riders.splice(riders.indexOf(rider), 1);
+	}
 	track.matrix[rider.pos[0]] = ["_", "_"];
-	riders.splice(riders.indexOf(rider), 1);
 }

@@ -37,19 +37,17 @@ function getPlayerChoice(riderID, move) {
     // put new choice into choices
     var riderObj = getRiderById(riderID);
     riderObj.setChoice(move);
-    // TODO hide cards from GUI
     hideCards(riderObj.cards);
     humanChoices++;
 
     //check if both choices are down -> execute round
-    if (humanChoices == 2) {
+    if (humanChoices == human.length) {
         var riderOrder = getRiderOrder();
         for (rider of riderOrder) {
             if (rider.control == "player") {
                 rider.move(rider.choice, riders, track);
             }
         }
-
         humanChoices = 0;
         endRound();
     }
@@ -67,8 +65,8 @@ function newGame() {
 	track = new Track(5, 5, trackLength, ronde);
 
 	// red team
-	riders.push(new Rider(1, 1, "Red R", track.x, track.y, "r", [19, 0], "rouleur", "player"));
-    riders.push(new Rider(2, 1, "Red S", track.x, track.y, "s", [19, 1], "sprinteur", "player"));
+	riders.push(new Rider(1, 1, "Red R", track.x, track.y, "r", [61, 0], "rouleur", "player"));
+    riders.push(new Rider(2, 1, "Red S", track.x, track.y, "s", [62, 1], "sprinteur", "player"));
 
 	// blue team
 	riders.push(new Rider(3, 2, "Blue R", track.x, track.y, "r", [4, 0], "peloton", "peloton"));
@@ -93,10 +91,7 @@ function newGame() {
 function newRound() {
 	//sout(">>" + sprinteur + "/" + sprinteur.length);
 	//sout(">>" + rouleur + "/" + rouleur.length);
-	if (riders.length == 0) {
-		alert("Game finished: " + ridersFinished[0].name + " has won!");
-		gameFinished = true;
-	}
+
 	sHand = [], rHand = [];
 	roundPositions = [];
 	draft = [];
@@ -114,12 +109,21 @@ function newRound() {
 	}
 	addToHand();
 	turn++;
-	showTurn();
+    showTurn();
+    if (human.length == 0) {
+        endRound();
+    }
 }
 
 
 function endRound() {
     //sout(track.matrix);
+	if (riders.length == 0) {
+		alert("Game finished: " + ridersFinished[0].name + " has won!");
+        gameFinished = true;
+        newGame();
+	}
+
     sout("_________________\nRound ended\n_________________");
     //peloCard = drawOneCard(peloton);
 
@@ -129,8 +133,6 @@ function endRound() {
         sleep(1000).then(() => {
             updateDraft(0).then(() =>  {
                 checkFatigue();
-                //putHandInDeck(sHand, sprinteur);
-                //putHandInDeck(rHand, rouleur);
                 newRound();
             });
         })

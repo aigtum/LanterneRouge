@@ -59,11 +59,7 @@ class Rider {
     // TODO: put cards back in deck
     setChoice(choice) {
         this.choice = choice;
-
-        sout("Choice hand" + this.hand)
         this.hand.splice(this.hand.indexOf(choice)-1, 1);
-        sout("Splice hand" + this.hand + "/" + choice)
-        
         this.addCards(this.hand);
     }
 
@@ -75,7 +71,7 @@ class Rider {
     }
 
     checkBusy(pos, riders) {
-        console.log("> Checking: " + pos);
+        //console.log("> Checking: " + pos);
         var counter = 0;
         for (var i = 0; i < riders.length; i++) {
             //console.log(i + " riders position: " + riders[i].pos + " own position: " + pos);
@@ -95,11 +91,12 @@ class Rider {
         }
     }
 
-    move(steps, riders, track) {
+    move(s, riders, track) {
+        var steps = parseInt(s);
         sout("Moving: " + this.name + ", " + steps);
-        var currPos = parseInt(this.pos[0]);
+        var currPos = this.pos[0];
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
-        var newPos = [currPos + parseInt(steps), 0];
+        var newPos = [currPos + steps, 0];
         var emptyPos = this.checkBusy(newPos, riders);
         if (this.pos[0] + steps < track.length-1) {
             var typeOfTiles = track.getTileTypes(this.pos[0], steps);
