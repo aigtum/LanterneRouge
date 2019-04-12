@@ -2,6 +2,9 @@
  * Riders
  */
 
+var peloCard;
+var peloSet = false;
+
 class Rider {
     width = 26;
     height = 16;
@@ -9,6 +12,7 @@ class Rider {
     choice = -1;
     hand = [];
     color;
+    
 
     constructor(id, teamid, name, x, y, role, pos, cards, control) {
         this.id = id;
@@ -27,9 +31,18 @@ class Rider {
     getNewHand() {
         this.hand = this.deck.drawCards();
     }
-
+        
     getNewCard() {
-        this.choice = this.deck.drawOneCard();
+        if (this.control == "peloton" && !peloSet) {
+            peloSet = true;
+            peloCard = this.deck.drawOneCard()
+            this.choice = peloCard;
+        } else if (this.control == "peloton" && peloSet) {
+            this.choice = peloCard;
+            peloSet = false;
+        } else {
+            this.choice = this.deck.drawOneCard();
+        }
     }
 
     addCards(cards) {
@@ -91,7 +104,7 @@ class Rider {
         }
     }
 
-    move(s, riders, track) {
+    move(s, riders, track, type) {
         var steps = parseInt(s);
         sout("Moving: " + this.name + ", " + steps);
         var currPos = this.pos[0];
@@ -112,7 +125,7 @@ class Rider {
         } else if (typeOfTiles.indexOf('u') != -1 && steps > 5) {        // if riders pass uphill
             sout(">> uphill: move max 5");
             this.move(5, riders, track);
-        } else if (track.getTile(this.pos[0], this.pos[1]).type == 'd' && steps < 5) {         // if riders are on downhill
+        } else if (track.getTile(this.pos[0], this.pos[1]).type == 'd' && steps < 5 && type != "draft") {         // if riders are on downhill
             sout(">> downhill: move min 5");
             this.move(5, riders, track);
         } else if (emptyPos[0] >= this.pos[0] && emptyPos[0] < track.length) {     // if the rider is not finished

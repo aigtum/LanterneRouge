@@ -1,7 +1,5 @@
 class Cards {
 
-    sHand = [];
-    rHand = [];
     peloCard;
     // TODO: riders of peloton should have a shared deck!
     constructor(type) {

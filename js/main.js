@@ -104,7 +104,7 @@ function checkDraft() {
 
 function moveDraft() {
 	draft.forEach(r => {
-		r.move(1, riders, track);
+		r.move(1, riders, track, "draft");
 	});
 	return true;
 }
