@@ -7,8 +7,8 @@ var peloSet = false;
 
 class Rider {
     constructor(id, teamid, name, x, y, role, pos, cards, control, color) {
-        this.width = 26;
-        this.height = 16;
+        this.width = 41;
+        this.height = 26;
         
         this.id = id;
         this.teamid = teamid;
@@ -143,17 +143,21 @@ class Rider {
 
     show(x, y) {
         fill(this.color);
-        rect(x + 2, y + 2, this.width, this.height, 6, 6, 6, 6);
+        rect(x + 2, y + 2, this.width, this.height, 10, 10, 10, 10);
         fill("black");
         if (this.control == "peloton") {
             textFont('Josefin Sans');
-            text("p"+this.role, x + 8, y + 4, 22, 22);
+            text("p"+this.role, x + this.width/2, y + this.height/2);
+            textAlign('center', 'center')
         } else if (this.control == "muscle1" || this.control == "muscle2") {
             textFont('Josefin Sans');
-            text("m"+this.role, x + 8, y + 4, 22, 22);
+            text("m"+this.role, x + this.width/2, y + this.height/2);
+            textAlign('center', 'center')
         } else {
             textFont('Josefin Sans');
-            text(this.role, x + 12, y + 4, 22, 22);
+            text(this.role, x + this.width/2, y + this.height/2);
+            
         }
+        textSize(20)
     }
 }

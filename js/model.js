@@ -68,8 +68,7 @@ function newGame() {
         alert("Tour has finished! Winner: " + standing);
         tourFinished = true;
     } else {
-        gameFinished = false;
-        
+        addToElement("finalResult", "");
         track = new Track(5, 5, trackLength, chosenTracks.pop());
         
         // red team
@@ -88,8 +87,6 @@ function newGame() {
         riders.push(new Rider(7, 4, "Muscle2 R", track.x, track.y, "r", [51, 0], "muscleRouleur", "muscle2", "lightgreen"));
         riders.push(new Rider(8, 4, "Muscle2 S", track.x, track.y, "s", [52, 0], "muscleSprinteur", "muscle2", "lightgreen"));
         
-        
-        sout(standing);
         turn = 0;
         getPlayerRiders();
         newRound();
@@ -113,20 +110,14 @@ function updateStandings() {
             standing[rider.id] += 1;
         }
     }
+    sout(standing);
 }
 
 
 function newRound() {
-	//sout(">>" + sprinteur + "/" + sprinteur.length);
-	//sout(">>" + rouleur + "/" + rouleur.length);
-
-	sHand = [], rHand = [];
 	roundPositions = [];
 	draft = [];
-	roundFinished = false;
-	//fillUpCards();
-	//addToElement("sInfo", "Sprinteur (" + sprinteur.length + ")");
-	//addToElement("rInfo", "Rouleur (" + rouleur.length + ")");
+	
     showRiderInfo();
 	for (rider of riders) {
         if (rider.control == "player") {
@@ -138,7 +129,7 @@ function newRound() {
 	addToHand();
 	turn++;
     showTurn();
-    if (human.length == 0) {
+    if (human.length == 0 && turn > 1) {
         endRound();
     }
 }
@@ -151,20 +142,20 @@ function endRound() {
         updateStandings();
         gameFinished = true;
         newGame();
-	}
+	} else {
+        sout("_________________\nRound ended\n_________________");
+    
+        riders = getRiderOrder();
+        moveAIRecursive(0).then(() => {
+            sleep(1000).then(() => {
+                checkFinished();
+                updateDraft(0).then(() =>  {
+                    checkFatigue();
+                    newRound();
+                });
+            })
+        });
 
-    sout("_________________\nRound ended\n_________________");
-    //peloCard = drawOneCard(peloton);
-
-    riders = getRiderOrder();
-    moveAIRecursive(0).then(() => {
-        checkFinished();
-        sleep(1000).then(() => {
-            updateDraft(0).then(() =>  {
-                checkFatigue();
-                newRound();
-            });
-        })
-    });
+    }
 }
 

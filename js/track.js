@@ -5,8 +5,8 @@
 class Track {
     
     constructor(x, y, length, set) {
-        this.tileWidth = 30;
-        this.tileHeight = 20;
+        this.tileWidth = 45;
+        this.tileHeight = 30;
         this.riderOrder = [];
         this.matrix = [];
         for (var i = 0; i < length; i++) {
@@ -49,7 +49,7 @@ class Track {
     addTileToTrack(i, j, tilesPerLength, lineNum, type) {
         var tile;
         if (j == 0) {
-            tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3 + 20, this.tileWidth, this.tileHeight, [i, j], type);
+            tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3 + this.tileHeight, this.tileWidth, this.tileHeight, [i, j], type);
         } else if (j == 1) {
             tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3, this.tileWidth, this.tileHeight, [i, j], type);
         }

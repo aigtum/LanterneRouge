@@ -2,7 +2,7 @@
 function setup() {
     let myCanvas = createCanvas(windowWidth, windowHeight/2);
     myCanvas.parent('gameBoard');
-    background(0, 230, 50);
+    background("green");
     frameRate(5);
     newTour();
     choiceMade = false;

@@ -33,7 +33,7 @@ class Cards {
 
     drawOneCard() {
         var result = this.deck.pop();
-        this.deck.push(result);
+        this.deck.unshift(result);
         sout("--- Drawing cards: " + this.type + ", " + result + "/" + this.deck);
         return result;
     }
