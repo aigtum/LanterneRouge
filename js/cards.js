@@ -1,18 +1,17 @@
 class Cards {
 
-    peloCard;
     // TODO: riders of peloton should have a shared deck!
     constructor(type) {
         this.type = type;
-        if (this.type == 'rouleur') {
+        if (type == 'rouleur') {
             this.deck = [3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7];
-        } else if (this.type == 'sprinteur') {
+        } else if (type == 'sprinteur') {
             this.deck = [2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 9, 9, 9];
-        } else if ("peloton") {
+        } else if (type == "peloton") {
             this.deck = [3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 92];
-        } else if ("muscleRouleur") {
+        } else if (type == "muscleRouleur") {
             this.deck = [3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7];
-        } else if ("muscleSprinteur") {
+        } else if (type == "muscleSprinteur") {
             this.deck = [2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 9, 9, 9];
         }
         this.shuffle();
@@ -35,15 +34,17 @@ class Cards {
     drawOneCard() {
         var result = this.deck.pop();
         this.deck.push(result);
+        sout("--- Drawing cards: " + this.type + ", " + result + "/" + this.deck);
         return result;
     }
-
+    
     drawCards() {   
         var hand = [];     
         for (var i = 0; i < 4; i++) {
             hand.push(this.deck[i]);
         }
         this.deck.splice(0, 4);
+        sout("--- Drawing cards: " + this.type +", " + hand + "/" + this.deck);
         return hand;
     }
 }

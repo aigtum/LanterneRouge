@@ -3,8 +3,8 @@
 /**
  * BUGS:
  * 
- * - draft downhill sometimes pushes too far
- * - cant move the other after one of the riders is finished
+ * - draft downhill sometimes pushes too far (fixed)
+ * - cant move the other after one of the riders is finished (fixed)
  * - riders change color 
  */
 
@@ -60,11 +60,9 @@ function moveSingleAI(r) {
 		sout("Peloton: ATTACK!");
 		if (r.role == "r"){
 			r.move(2, riders, track);
-			//getRiderById(r.teamID).move(9, riders, track);
 		}
 		else if (r.role == "s"){
 			r.move(9, riders, track);
-			//getRiderById(r.teamID).move(2, riders, track);
 		} 
 	}else{
 		r.move(r.choice, riders, track);

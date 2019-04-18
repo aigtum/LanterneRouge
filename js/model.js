@@ -4,20 +4,18 @@ var track;
 var finishLineAt = 73;
 var startLineAt = 4;
 // rider stuff
-var colors = ["red", "blue", "black", "green"];   // not used
+var human = [];
 var riders = [];
 var ridersFinished = [];
 var draft = [];
-
 // points
 var standing = {};
 
 // game stuff
 var roundPositions = [];
+var tourFinished;
 var gameFinished;
 var roundFinished;
-var userDoneS = false, userDoneR = false;
-var sDone = false, rDone = false;
 var turn;
 
 
@@ -59,32 +57,62 @@ function getPlayerChoice(riderID, move) {
  * GAME
  */
 
+function newTour() {
+    tourFinished = false;
+    addToStanding();
+    newGame();
+}
+
 function newGame() {
-	//track = new Track(5, 5, trackLength, classic);
-	//track = new Track(5, 5, trackLength, firenze_milano);
-	track = new Track(5, 5, trackLength, ronde);
+    if (chosenTracks.length == 0) {
+        alert("Tour has finished! Winner: " + standing);
+        tourFinished = true;
+    } else {
+        gameFinished = false;
+        
+        track = new Track(5, 5, trackLength, chosenTracks.pop());
+        
+        // red team
+        riders.push(new Rider(1, 1, "Player R", track.x, track.y, "r", [61, 0], "rouleur", "player", "red"));
+        riders.push(new Rider(2, 1, "Player S", track.x, track.y, "s", [62, 1], "sprinteur", "player", "red"));
+        
+        // blue team
+        riders.push(new Rider(3, 2, "Peloton R", track.x, track.y, "r", [54, 0], "peloton", "peloton", "pink"));
+        riders.push(new Rider(4, 2, "Peloton S", track.x, track.y, "s", [53, 0], "peloton", "peloton", "pink"));
+        
+        // green team
+        riders.push(new Rider(5, 3, "Muscle1 R", track.x, track.y, "r", [53, 1], "muscleRouleur", "muscle1", "lightblue"));
+        riders.push(new Rider(6, 3, "Muscle1 S", track.x, track.y, "s", [54, 1], "muscleSprinteur", "muscle1", "lightblue"));
+        
+        // pink team
+        riders.push(new Rider(7, 4, "Muscle2 R", track.x, track.y, "r", [51, 0], "muscleRouleur", "muscle2", "lightgreen"));
+        riders.push(new Rider(8, 4, "Muscle2 S", track.x, track.y, "s", [52, 0], "muscleSprinteur", "muscle2", "lightgreen"));
+        
+        
+        sout(standing);
+        turn = 0;
+        getPlayerRiders();
+        newRound();
+    }
+}
 
-	// red team
-	riders.push(new Rider(1, 1, "Red R", track.x, track.y, "r", [61, 0], "rouleur", "player"));
-    riders.push(new Rider(2, 1, "Red S", track.x, track.y, "s", [62, 1], "sprinteur", "player"));
+function addToStanding() {
+    for (var i = 1; i < 9; i++) {
+        standing[i] = 0;
+    }
+}
 
-	// blue team
-	riders.push(new Rider(3, 2, "Blue R", track.x, track.y, "r", [4, 0], "peloton", "peloton"));
-	riders.push(new Rider(4, 2, "Blue S", track.x, track.y, "s", [3, 0], "peloton", "peloton"));
 
-	// green team
-	riders.push(new Rider(5, 3, "Green R", track.x, track.y, "r", [3, 1], "muscleRouleur", "muscle1"));
-	riders.push(new Rider(6, 3, "Green S", track.x, track.y, "s", [4, 1], "muscleSprinteur", "muscle1"));
-
-	// pink team
-	riders.push(new Rider(7, 4, "Pink R", track.x, track.y, "r", [1, 0], "rouleur", "muscle2"));
-	riders.push(new Rider(8, 4, "Pink S", track.x, track.y, "s", [2, 0], "sprinteur", "muscle2"));
-
-    turn = 0;
-    setColor(riders);
-    getPlayerRiders();
-	newRound();
-    
+function updateStandings() {
+    for (rider of ridersFinished) {
+        if (ridersFinished.indexOf(rider) == 0) {
+            standing[rider.id] += 3;
+        } else if (ridersFinished.indexOf(rider) == 1) {
+            standing[rider.id] += 2;
+        } else if (ridersFinished.indexOf(rider) == 2) {
+            standing[rider.id] += 1;
+        }
+    }
 }
 
 
@@ -119,7 +147,8 @@ function newRound() {
 function endRound() {
     //sout(track.matrix);
 	if (riders.length == 0) {
-		alert("Game finished: " + ridersFinished[0].name + " has won!");
+        alert("Game finished: " + ridersFinished[0].name + " has won!");
+        updateStandings();
         gameFinished = true;
         newGame();
 	}

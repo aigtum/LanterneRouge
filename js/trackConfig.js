@@ -55,3 +55,5 @@ var T = ["_", "_"];
 var classic = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u];
 var firenze_milano = [a, b, c, g, i, D, H, q, n, t, m, K, O, L, r, e, p, J, s, f, u];
 var ronde = [a,b,c,m,g,f,t,e,q,o,n,L,P,j,k,I,D,H,r,S,u];
+
+var chosenTracks = [firenze_milano, ronde];

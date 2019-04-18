@@ -6,15 +6,10 @@ var peloCard;
 var peloSet = false;
 
 class Rider {
-    width = 26;
-    height = 16;
-    
-    choice = -1;
-    hand = [];
-    color;
-    
-
-    constructor(id, teamid, name, x, y, role, pos, cards, control) {
+    constructor(id, teamid, name, x, y, role, pos, cards, control, color) {
+        this.width = 26;
+        this.height = 16;
+        
         this.id = id;
         this.teamid = teamid;
         this.name = name;
@@ -24,6 +19,11 @@ class Rider {
         this.pos = pos;
         this.cards = cards;
         this.control = control;
+        this.color = color;
+        
+        this.choice = -1;
+        this.hand = [];
+        
         this.finished = false;
         this.deck = new Cards(cards);
     }
@@ -116,7 +116,7 @@ class Rider {
         } else {
             var typeOfTiles = track.getTileTypes(this.pos[0], track.length-this.pos[0]);
         }
-        sout("Tile types: " + typeOfTiles);
+        //sout("Tile types: " + typeOfTiles);
         
         //sout("> " + emptyPos[0] + ", " + track.length);
         if (emptyPos[0] > track.length-1) {        // if the rider is ouside of the track

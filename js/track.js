@@ -3,11 +3,11 @@
  */
 
 class Track {
-    tileWidth = 30;
-    tileHeight = 20;
-    riderOrder = [];
-
+    
     constructor(x, y, length, set) {
+        this.tileWidth = 30;
+        this.tileHeight = 20;
+        this.riderOrder = [];
         this.matrix = [];
         for (var i = 0; i < length; i++) {
             this.matrix[i] = new Array(2);
@@ -28,12 +28,9 @@ class Track {
     }
 
     getTileTypes(start, steps) {
-        sout("Start: " + start + ", Steps: " + steps)
         var types = [];
         for (var i = 0; i < steps; i++) {
-            //sout(i + ": " + this.getTile(start+i, 0).type);
             types.push(this.getTile(start+i, 0).type);
-            
         }
         return types;
     }

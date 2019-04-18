@@ -1,20 +1,18 @@
 
-var human = [];
-
 function setup() {
     let myCanvas = createCanvas(windowWidth, windowHeight/2);
     myCanvas.parent('gameBoard');
     background(0, 230, 50);
     frameRate(5);
-    newGame();
-    gameFinished = false;
-    roundFinished = false;
+    newTour();
     choiceMade = false;
 }
 
 function draw() {
-    track.show(riders);
-    update();
+    if (!tourFinished) {
+        track.show(riders);
+        update();
+    }
 }
 
 function getPlayerRiders(){
@@ -60,13 +58,6 @@ function showRiderInfo() {
         if (rider.role == "s") {
             addToElement("sInfo", "Sprinteur " + "(" + rider.deck.deck.length + ")");
         }
-    }
-}
-
-function setColor(riders) {
-    colors = ["red", "pink", "lightblue", "lightgreen"];
-    for (rider of riders) {
-        rider.color = colors[rider.teamid-1];
     }
 }
 
