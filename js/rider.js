@@ -7,8 +7,15 @@ var peloSet = false;
 
 class Rider {
     constructor(id, teamid, name, x, y, role, pos, cards, control, color) {
-        this.width = 41;
-        this.height = 26;
+        if (width > 1000) {
+            this.width = (width-10)/trackLength*3-4;
+            this.height = this.width/1.5-2;
+            
+        } else {
+            this.width = (width-5)/trackLength*4-4;
+            this.height = this.width/1.5-1;
+
+        }
         
         this.id = id;
         this.teamid = teamid;
@@ -143,21 +150,21 @@ class Rider {
 
     show(x, y) {
         fill(this.color);
-        rect(x + 2, y + 2, this.width, this.height, 10, 10, 10, 10);
-        fill("black");
+        rect(x + 2, y + 2, this.width, this.height, 8, 8, 8, 8);
+        textFont('Josefin Sans');
         if (this.control == "peloton") {
-            textFont('Josefin Sans');
-            text("p"+this.role, x + this.width/2, y + this.height/2);
+            fill("black");
+            text("p"+this.role, x + this.width/2+2, y + this.height/2+2);
             textAlign('center', 'center')
         } else if (this.control == "muscle1" || this.control == "muscle2") {
-            textFont('Josefin Sans');
-            text("m"+this.role, x + this.width/2, y + this.height/2);
+            fill("black");
+            text("m"+this.role, x + this.width/2+2, y + this.height/2+2);
             textAlign('center', 'center')
         } else {
-            textFont('Josefin Sans');
-            text(this.role, x + this.width/2, y + this.height/2);
-            
+            fill("black");
+            text(this.role, x + this.width/2+2, y + this.height/2+2);
+            textAlign('center', 'center')
         }
-        textSize(20)
+        textSize(this.height);
     }
 }

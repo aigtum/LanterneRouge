@@ -5,8 +5,13 @@
 class Track {
     
     constructor(x, y, length, set) {
-        this.tileWidth = 45;
-        this.tileHeight = 30;
+        if (width > 1000) {
+            this.tileWidth = (width-10)/length*3;
+            this.tileHeight = this.tileWidth/1.5;
+        } else {
+            this.tileWidth = (width-5)/length*4;
+            this.tileHeight = this.tileWidth/1.5;
+        }
         this.riderOrder = [];
         this.matrix = [];
         for (var i = 0; i < length; i++) {
@@ -49,9 +54,9 @@ class Track {
     addTileToTrack(i, j, tilesPerLength, lineNum, type) {
         var tile;
         if (j == 0) {
-            tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3 + this.tileHeight, this.tileWidth, this.tileHeight, [i, j], type);
-        } else if (j == 1) {
             tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3, this.tileWidth, this.tileHeight, [i, j], type);
+        } else if (j == 1) {
+            tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3- this.tileHeight, this.tileWidth, this.tileHeight, [i, j], type);
         }
         this.tiles[i][j] = tile;
         return tile;
@@ -67,6 +72,7 @@ class Track {
             }
             for (var j = 0; j < 2; j++) {
                 tile = this.addTileToTrack(i, j, tilesPerLength, lineNum, this.trackProfile[i]);
+                
                 tile.show();
                 
                 riders.reverse().forEach(rider => {
@@ -78,6 +84,7 @@ class Track {
                         this.matrix[i][j] = '_';
                     }
                 });
+                
             }
         }
     }
@@ -108,26 +115,34 @@ class Tile {
     }
 
     show() {
+        
+        if(this.num[0,1] == 0) {
+            fill("green");
+            rect(this.x, this.y+this.width/5, this.width, this.height);
+        } else {
+            fill("green");
+            rect(this.x, this.y-this.width/5, this.width, this.height);
+        }
         if (this.type == "s" || this.type == "f") {
             fill("yellow");
+            rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "u") {
             fill("salmon");
-            stroke("darkred");
+            rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "d") {
             fill("lightblue");
-            stroke("blue")
+            rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "c") {
             fill(200, 200, 100);
+            rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "r") {
-            stroke(100, 200, 220);
+            stroke("lightblue");
+            rect(this.x, this.y, this.width, this.height);
         } else {
-            stroke("black");
             fill(220, 220, 220);
+            rect(this.x, this.y, this.width, this.height);
         }
-        rect(this.x, this.y, this.width, this.height);
-
-        //fill("black");
-        //text(this.num, this.x + 5, this.y + 5, 15, 15);
-
+        
+        
     }
 }
