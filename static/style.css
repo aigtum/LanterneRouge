@@ -1,20 +1,67 @@
 body {
-    font-family: 'Josefin Sans', sans-serif; 
-    background-size: 100%;
+    font-family: 'Josefin Sans', sans-serif;
     color: white;
-    
     text-shadow: 2px 2px 0 black;
-    background-image: url("../static/flammerouge-featured.jpg");
     background-repeat: no-repeat;
-    background-color: rgba(202, 173, 137, 0.692);
+    background: url("../static/paper.png");
+    width: 100%;
 }
 
 h1 {
     text-align: center;
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 3em;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgb(172, 19, 19);
+    font-size: 3.5em;
+    margin-top: 0;
+    padding-top: 1em;
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: rgb(109, 9, 9);
+}
+
+.top {
+    background-image: url('../static/flammerouge-featured.jpg');
+    height: 10%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-container {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+
+}
+
+.start-form {
+    padding: 1em;
+    border-style: solid;
+    border-width: 1em;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    background-color: rgb(109, 9, 9);
+    border-color: white;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.start-form td,
+.start-form th {
+    padding: 5px;
+}
+
+.start-form td:nth-child(2),
+.start-form td:nth-child(3) {
+    text-align: center;
+}
+
+.start-form th {
+    text-align: left;
+    padding-bottom: 5px;
+    border-bottom: 1px solid white;
 }
 
 .roundCounter {
@@ -41,12 +88,12 @@ h1 {
 
 .info {
     text-align: center;
+    margin: 5px;
 }
 
 #report {
     color: lightcoral;
     background: black;
-    
 }
 
 .cards {
@@ -61,13 +108,13 @@ h1 {
 .sCards {
     float: left;
     margin-right: 2em;
-    text-align:center;
+    text-align: center;
 }
 
 .rCards {
     float: right;
     margin-left: 2em;
-    text-align:center;
+    text-align: center;
 }
 
 .card {
@@ -87,3 +134,74 @@ h1 {
     text-shadow: 2px 2px 0 lightgray;
 }
 
+.button {
+    margin: 2px;
+    font-family: 'Josefin Sans',
+        sans-serif;
+    border-radius: 4px;
+    background-color: white;
+    color: rgb(109, 9, 9);
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid rgb(109, 9, 9);
+}
+
+
+.button:disabled {
+    background-color: gray;
+}
+
+.button:disabled:hover {
+    background-color: gray;
+}
+
+.button:hover {
+    background-color: lightgray;
+}
+
+.alt-button {
+    margin: 2px;
+    font-family: 'Josefin Sans',
+        sans-serif;
+    border-radius: 4px;
+    color: white;
+    background-color: rgb(109, 9, 9);
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid white
+}
+
+.alt-button:hover {
+    background-color: rgb(77, 6, 6);
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    /* 15% from the top and centered */
+    margin: 32% auto;
+    /* Could be more or less, depending on screen size */
+    width: 43%;
+}

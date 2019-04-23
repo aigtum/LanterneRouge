@@ -8,7 +8,7 @@ class Cards {
         } else if (type == 'sprinteur') {
             this.deck = [2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 9, 9, 9];
         } else if (type == "peloton") {
-            this.deck = [3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 92];
+            this.deck = [3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 92, 92];
         } else if (type == "muscleRouleur") {
             this.deck = [3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7];
         } else if (type == "muscleSprinteur") {
@@ -34,18 +34,17 @@ class Cards {
     drawOneCard() {
         var result = this.deck.pop();
         this.deck.unshift(result);
-        sout("--- Drawing cards: " + this.type + ", " + result + "/" + this.deck);
+        //sout("--- Drawing cards: " + this.type + ", " + result + "/" + this.deck);
         return result;
     }
-    
-    drawCards() {   
-        var hand = [];     
+
+    drawCards() {
+        var hand = [];
         for (var i = 0; i < 4; i++) {
             hand.push(this.deck[i]);
         }
         this.deck.splice(0, 4);
-        sout("--- Drawing cards: " + this.type +", " + hand + "/" + this.deck);
+        //sout("--- Drawing cards: " + this.type +", " + hand + "/" + this.deck);
         return hand;
     }
 }
-

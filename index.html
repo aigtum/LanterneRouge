@@ -12,7 +12,7 @@
         }
     </style>
     <link rel="stylesheet" href="./static/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
 
     <script src="./p5/p5.min.js"></script>
     <script src="./p5/addons/p5.dom.min.js"></script>
@@ -20,7 +20,6 @@
 
 
     <script src="./js/gui.js"></script>
-    <script src="./js/controller.js"></script>
     <script src="./js/cards.js"></script>
     <script src="./js/ai.js"></script>
     <script src="./js/model.js"></script>
@@ -30,46 +29,241 @@
     <script src="./js/trackConfig.js"></script>
 </head>
 
-<body background="./static/flammerouge-featured.jpg">
-    <div>
-        <h1>LANTERNE ROUGE</h1>
-    
-        <div class="endRound">
-            <h3 class="roundCounter" id="roundCounter"></h3>
+<body>
+    <div class="top">
+        <div class="header">
+            <h1>LANTERNE ROUGE</h1>
+
+            <div class="endRound">
+                <h3 id="track-name"></h3>
+                <h3 class="roundCounter" id="roundCounter"></h3>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-container">
+        <div class="start-form" id="settings">
+            <form>
+                <p>
+                    Player Color:
+                    <div>
+                        <input type="radio" name="player-color" value="Red" checked> Red
+                        <input type="radio" name="player-color" value="Green"> Green
+                        <input type="radio" name="player-color" value="Blue"> Blue
+                        <input type="radio" name="player-color" value="Black"> Black
+                    </div>
+                </p>
+                <div>
+                    Length of tour: <span id="track-counter"></span> track(s)
+                </div>
+                <p>
+                    <input class="slider" id="input-track-num" name="track-num" type="range" min="1" max="10" value="3">
+                </p>
+                <button class="button" type="button" value="Start!" onclick="getSettings();">Start!</button>
+            </form>
         </div>
     </div>
 
-    <div class="info">
-        <div id="report"></div>
-    </div>
-    
-    <div class="cards">
-        <div class="sCards">
-            <h3 id="sInfo"></h3>
-            <button class="card" id="s0" onclick="getPlayerChoice(2, this.innerHTML)"></button>
-            <button class="card" id="s1" onclick="getPlayerChoice(2, this.innerHTML)"></button>
-            <button class="card" id="s2" onclick="getPlayerChoice(2, this.innerHTML)"></button>
-            <button class="card" id="s3" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+
+
+    <div class="game" id="game" hidden>
+        <div class="cards">
+            <button class="alt-button" id="myRaceBtn">View Race Standing</button>
+            <button class="alt-button" id="myTourBtn">View Tour Standing</button>
+            <button class="alt-button" id="myRulesBtn">View Rules</button>
         </div>
-        <div class="rCards">
-            <h3 id="rInfo"></h3>
-            <button class="card" id="r0" onclick="getPlayerChoice(1, this.innerHTML)"></button>
-            <button class="card" id="r1" onclick="getPlayerChoice(1, this.innerHTML)"></button>
-            <button class="card" id="r2" onclick="getPlayerChoice(1, this.innerHTML)"></button>
-            <button class="card" id="r3" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+        <!-- Trigger/Open The Modal -->
+        <div class="cards">
+            <div id="report"></div>
+            <div class=info>
+                <h3 id="sInfo"></h3>
+                <button id="mySBtn" class="button">Open Sprinteur Cards</button>
+            </div>
+
+            <!-- The Modal -->
+            <div id="mySprinteurModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="sCards">
+                        <button class="card" id="s0" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+                        <button class="card" id="s1" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+                        <button class="card" id="s2" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+                        <button class="card" id="s3" onclick="getPlayerChoice(2, this.innerHTML)"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trigger/Open The Modal -->
+            <div class="info">
+                <h3 id="rInfo"></h3>
+                <button id="myRBtn" class="button">Open Rouleur Cards</button>
+            </div>
+
+            <!-- The Modal -->
+            <div id="myRouleurModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="rCards">
+                        <button class="card" id="r0" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+                        <button class="card" id="r1" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+                        <button class="card" id="r2" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+                        <button class="card" id="r3" onclick="getPlayerChoice(1, this.innerHTML)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameBoard"></div>
+
+
+
+        <!-- The Modal -->
+        <div id="myRaceModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="form-container">
+                    <div class="start-form">
+                        <p>Race Standing:</p>
+                        <div id="finalResult"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    
-    <div id="gameBoard"></div>
-    
-    <div class="info">
-        <div id="finalResult"></div>
-        <div id="standing"></div>
+
+    <div id="myTourModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="form-container">
+                <table class="start-form" id="standing-board" hidden>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Medals</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="standing1"></td>
+                            <td id="points1"></td>
+                            <td id="medals1"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing2"></td>
+                            <td id="points2"></td>
+                            <td id="medals2"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing3"></td>
+                            <td id="points3"></td>
+                            <td id="medals3"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing4"></td>
+                            <td id="points4"></td>
+                            <td id="medals4"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing5"></td>
+                            <td id="points5"></td>
+                            <td id="medals5"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing6"></td>
+                            <td id="points6"></td>
+                            <td id="medals6"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing7"></td>
+                            <td id="points7"></td>
+                            <td id="medals7"></td>
+                        </tr>
+                        <tr>
+                            <td id="standing8"></td>
+                            <td id="points8"></td>
+                            <td id="medals8"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    
-    
+
+    <!-- The Modal -->
+    <div id="myRulesModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="form-container">
+                <div class="start-form">
+                    <h2>Rules:</h2>
+                    <p>Here there be rules....</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
+<script>
+    var slider = document.getElementById("input-track-num");
+    var output = document.getElementById("track-counter");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+    }
+</script>
+
+<script>
+    // Get the modal
+    var sModal = document.getElementById('mySprinteurModal');
+    var rModal = document.getElementById('myRouleurModal');
+    var raceModal = document.getElementById('myRaceModal');
+    var tourModal = document.getElementById('myTourModal');
+    var rulesModal = document.getElementById('myRulesModal');
+
+
+    // Get the button that opens the modal
+    var sBtn = document.getElementById("mySBtn");
+    var rBtn = document.getElementById("myRBtn");
+    var rulesBtn = document.getElementById("myRulesBtn");
+    var raceStandingBtn = document.getElementById("myRaceBtn");
+    var tourStandingBtn = document.getElementById("myTourBtn");
+
+
+    // When the user clicks on the button, open the modal
+    sBtn.onclick = function () {
+        sModal.style.display = "block";
+    }
+    rBtn.onclick = function () {
+        rModal.style.display = "block";
+    }
+    raceStandingBtn.onclick = function () {
+        raceModal.style.display = "block";
+    }
+    tourStandingBtn.onclick = function () {
+        tourModal.style.display = "block";
+    }
+    rulesBtn.onclick = function () {
+        rulesModal.style.display = "block";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == raceModal) {
+            raceModal.style.display = "none";
+        } else if (event.target == tourModal && !tourFinished) {
+            tourModal.style.display = "none";
+        } else if (event.target == rulesModal) {
+            rulesModal.style.display = "none";
+        }
+    }
+    /* UNCOMMENT TO CHEAT
+    // When the user clicks anywhere outside of the modal, close it
+     */
+</script>
+
 
 </html>

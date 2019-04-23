@@ -4,26 +4,31 @@
 
 class Track {
     
-    constructor(x, y, length, set) {
+    constructor(x, y, set) {
+        this.name = set[0];
+        this.set = set[1];
+        this.trackInfo = this.getTrackLength();
+        this.length = this.trackInfo[0];
+        this.startLineAt = this.trackInfo[1];
+        this.finishLineAt = this.trackInfo[2];
+        sout(this.trackInfo);
         if (width > 1000) {
-            this.tileWidth = (width-10)/length*3;
+            this.tileWidth = (width-10)/this.length*3;
             this.tileHeight = this.tileWidth/1.5;
         } else {
-            this.tileWidth = (width-5)/length*4;
+            this.tileWidth = (width-5)/this.length*4;
             this.tileHeight = this.tileWidth/1.5;
         }
         this.riderOrder = [];
         this.matrix = [];
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < this.length; i++) {
             this.matrix[i] = new Array(2);
         }
         this.x = x;
         this.y = y;
-        this.length = length;
-        this.set = set;
         this.trackProfile = this.buildTrack();
         this.tiles = [];
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < this.length; i++) {
             this.tiles[i] = new Array(2);
         }
     }
@@ -40,6 +45,23 @@ class Track {
         return types;
     }
 
+    getTrackLength() {
+        var counter = 0;
+        var startLine = 0;
+        var finishLine = 0;
+        for (var i = 0; i < this.set.length; i++) {
+            for (var j = 0; j < this.set[i].length; j++) {
+                if (this.set[i][j] == "s") {
+                    startLine++;
+                } else if (this.set[i][j] == "f") {
+                    finishLine++;
+                }
+                counter++;
+            }
+        } 
+        return [counter, startLine, counter-finishLine];
+    }
+
     buildTrack() {
         var trackProfile = [];
         for (var i = 0; i < this.set.length; i++) {
@@ -47,7 +69,6 @@ class Track {
                 trackProfile.push(this.set[i][j]);
             }
         }
-        //sout(trackProfile); 
         return trackProfile;
     }
 
@@ -115,7 +136,6 @@ class Tile {
     }
 
     show() {
-        
         if(this.num[0,1] == 0) {
             fill("green");
             rect(this.x, this.y+this.width/5, this.width, this.height);
@@ -130,7 +150,7 @@ class Tile {
             fill("salmon");
             rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "d") {
-            fill("lightblue");
+            fill(64, 64, 182);
             rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "c") {
             fill(200, 200, 100);
@@ -142,7 +162,9 @@ class Tile {
             fill(220, 220, 220);
             rect(this.x, this.y, this.width, this.height);
         }
-        
+        //fill("black");
+        //text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
+
         
     }
 }
