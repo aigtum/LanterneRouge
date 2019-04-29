@@ -3,7 +3,8 @@ body {
     color: white;
     text-shadow: 2px 2px 0 black;
     background-repeat: no-repeat;
-    background: url("../static/paper.png");
+    background: url("../static/paper.jpg");
+    background-size: 100%;
     width: 100%;
 }
 
@@ -17,10 +18,15 @@ h1 {
     -webkit-text-stroke-color: rgb(109, 9, 9);
 }
 
+a {
+    color: white;
+}
+
 .top {
-    background-image: url('../static/flammerouge-featured.jpg');
+    background-image: url('../static/header1.jpg');
     height: 10%;
     width: 100%;
+    background-position-y: 20%;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -92,8 +98,8 @@ h1 {
 }
 
 #report {
-    color: lightcoral;
-    background: black;
+    color: rgb(109, 9, 9);
+    text-shadow: 0px 0px 0 black;
 }
 
 .cards {
@@ -146,6 +152,17 @@ h1 {
     border: 2px solid rgb(109, 9, 9);
 }
 
+.frame {
+    margin: 2px;
+    font-family: 'Josefin Sans',
+        sans-serif;
+    border-radius: 4px;
+    color: white;
+    background-color: rgb(109, 9, 9);
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid white
+}
 
 .button:disabled {
     background-color: gray;

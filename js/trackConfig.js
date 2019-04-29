@@ -110,7 +110,6 @@ var entre_cotes = [
 ];
 
 
-
 var avaliableTracks = [
     firenze_milano,
     ronde_van_welvegen,

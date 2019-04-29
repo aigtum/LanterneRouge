@@ -1,13 +1,5 @@
 /* jslint esversion: 6 */
 
-/**
- * BUGS:
- * 
- * - draft downhill sometimes pushes too far (fixed)
- * - cant move the other after one of the riders is finished (fixed)
- * - riders change color 
- */
-
 
 
 /**

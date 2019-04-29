@@ -68,17 +68,20 @@
 
 
     <div class="game" id="game" hidden>
+        
         <div class="cards">
             <button class="alt-button" id="myRaceBtn">View Race Standing</button>
             <button class="alt-button" id="myTourBtn">View Tour Standing</button>
             <button class="alt-button" id="myRulesBtn">View Rules</button>
         </div>
         <!-- Trigger/Open The Modal -->
+
         <div class="cards">
-            <div id="report"></div>
-            <div class=info>
-                <h3 id="sInfo"></h3>
-                <button id="mySBtn" class="button">Open Sprinteur Cards</button>
+            <div class="frame">
+                <div class="info">
+                    <h3 id="sInfo"></h3>
+                    <button id="mySBtn" class="button">Reveal Sprinteur Cards</button>
+                </div>
             </div>
 
             <!-- The Modal -->
@@ -95,9 +98,11 @@
             </div>
 
             <!-- Trigger/Open The Modal -->
-            <div class="info">
-                <h3 id="rInfo"></h3>
-                <button id="myRBtn" class="button">Open Rouleur Cards</button>
+            <div class="frame">
+                <div class="info">
+                    <h3 id="rInfo"></h3>
+                    <button id="myRBtn" class="button">Reveal Rouleur Cards</button>
+                </div>
             </div>
 
             <!-- The Modal -->
@@ -113,9 +118,12 @@
                 </div>
             </div>
         </div>
-
+        
+        <div class="info">
+            <div id="report"></div>
+        </div>
+        
         <div id="gameBoard"></div>
-
 
 
         <!-- The Modal -->
@@ -198,7 +206,67 @@
             <div class="form-container">
                 <div class="start-form">
                     <h2>Rules:</h2>
-                    <p>Here there be rules....</p>
+                    <h3>Overview:</h3>
+                    <p>
+                        Flamme Rouge is a bicycle racing game where each player controls two riders: a Rouleur(r) a Sprinteur(s). 
+                        The players' goal is to be the first to cross the finish line with one of their riders.
+                        The setup is done automatically and the track is chosen randomly from a number of available tracks.
+                    </p>
+                    <h3>Playing the game:</h3>
+                    <p>
+                        Four cards are drawn for each rider and the player chooses 1 card from each hand. The card represents the
+                        number of squared the selected rider can move that round. Once this is done, the riders are 
+                        moved according to the rules of the game. Once the cards have been chosen, player controlled riders are moved,
+                        followed by AI-contolled ones. Once that is done, slipstreaming and exhausion is applied.
+                    </p>
+                    <p>
+                        * A rider cannot be moved into a position occupied by another rider.
+                    </p>
+                    <p>
+                        * A rider shall always be moved to the right-hand lane.
+                    </p>
+                    <h3>Slipstreaming and Exhaustion</h3>
+                    <p>
+                        Slipstreaming is done by moving each pack (one or more riders with no empty spaces between them) of riders 
+                        one square forward if the distance to the next pack is exactly 1 square.
+                    </p>
+                    <p>
+                        After slipstreaming has been applied, every rider in the head of its pack (in both left and right lane) receives
+                        an exhausiton card (a 2-card with red background). The exhaustion cards are used like the regular 2-cards.
+                    </p>
+                    <h3>Mountains and Downhill</h3>
+                    <p>
+                        In addition to the regular (grey) squares, there are mountain areas (red) and downhill areas (blue). These
+                        change the way riders can move.
+                    </p>
+                    <p>
+                        Mountain: a rider starting on, moving onto or going across any red square can never move more than 5 squares.
+                        A higher value vard can be played, but its value is capped at 5 and excess moves are wasted. Additionally,
+                        a rider on a red sqare can neither give nor receive slipstreaming.
+                    </p>
+                    <p>
+                        Downhill: if a rider starts a turn on a blue square, his card always counts as a minimun og 5. A lower value 
+                        can be played, but its values is always a minimum 5. Slipstreaming is awarded as normal.
+                    </p>
+                    <h3>Tour and Points</h3>
+                    <p>
+                        When playing more than one stage, the final placement of riders on each track will give points that count
+                        towards the overall standing in the tour. The points are distributed as follows:
+                    </p>
+                    <p>
+                        Winner: 3 points, 2nd place: 2 points, 3rd place: 1 point.
+                    </p>
+
+
+                    <h4>Attribution:</h4>
+                    <p>The original board game, Flamme Rouge, was designed by Asger Harding Granerud and published by Lautapelit.fi</p>
+                    <p>
+                        <a target="_blank" href="https://www.vecteezy.com/">Vector Art by Vecteezy.com</a>
+                    </p>
+                    <p>
+                        Header Image obtained from CorVos/PezCyclingNews
+                    </p>
+                    <h4>If you enjoy this game, please consider buying the amazing board game this one is based on!</h4>
                 </div>
             </div>
         </div>
@@ -260,9 +328,6 @@
             rulesModal.style.display = "none";
         }
     }
-    /* UNCOMMENT TO CHEAT
-    // When the user clicks anywhere outside of the modal, close it
-     */
 </script>
 
 

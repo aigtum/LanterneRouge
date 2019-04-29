@@ -68,7 +68,7 @@ class Rider {
         if (this.pos[0] > track.length - 6) {
             this.finished = true;
             //track.matrix[this.pos[0]] = ["_", "_"];
-            sout(">>>>> " + this.name + " finished!" + this.pos);
+            //sout(">>>>> " + this.name + " finished!" + this.pos);
         }
         //sout(track.matrix);
     }
@@ -88,19 +88,18 @@ class Rider {
     }
 
     checkBusy(pos, riders) {
-        //console.log("> Checking: " + pos);
+        console.log("> Checking: " + this.name + ", " + pos);
         var counter = 0;
         for (var i = 0; i < riders.length; i++) {
             //console.log(i + " riders position: " + riders[i].pos + " own position: " + pos);
-            //console.log(riders[i].pos[0] != pos[0] && riders[i].pos[1] != pos[1] );
             if (riders[i].pos[0] == pos[0] && riders[i].pos[1] == pos[1] && pos[1] == 0) {
-                //console.log("blocked down");
+                console.log("blocked down");
                 return this.checkBusy([parseInt(pos[0]), 1], riders);
             } else if (riders[i].pos[0] == pos[0] && riders[i].pos[1] == pos[1] && pos[1] == 1) {
-                //console.log("blocked up");
+                console.log("blocked up");
                 return this.checkBusy([parseInt(pos[0]) - 1, 0], riders);
             } else if (counter == riders.length - 1) {
-                //console.log(">Setting: " + pos);
+                console.log(">Setting: " + pos);
                 return pos;
             }
             counter++;
@@ -109,7 +108,7 @@ class Rider {
 
     move(s, riders, track, type) {
         var steps = parseInt(s);
-        //sout("Moving: " + this.name + ", " + steps);
+        sout("Moving: " + this.name + ", " + steps + ", " + this.deck);
         var currPos = this.pos[0];
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
         var newPos = [currPos + steps, 0];
@@ -135,12 +134,12 @@ class Rider {
             //sout(">> normal: rider not finished");
             track.matrix[emptyPos[0]][emptyPos[1]] = 'x';
             this.pos = emptyPos;
-        } else if (emptyPos[0] < this.pos[0]) { // if the rider is placed backwards
+        } else if (emptyPos[0] <= this.pos[0]) { // if the rider is placed backwards
             // do nothing, keep the rider in place
             this.move(0, riders, track);
         }
         this.checkFinished(track);
-        //sout("__________" + "\n" + track.matrix +"\n__________");
+        sout("__________" + "\n" + track.matrix +"\n__________");
     }
 
     show(x, y) {

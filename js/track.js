@@ -11,7 +11,6 @@ class Track {
         this.length = this.trackInfo[0];
         this.startLineAt = this.trackInfo[1];
         this.finishLineAt = this.trackInfo[2];
-        sout(this.trackInfo);
         if (width > 1000) {
             this.tileWidth = (width-10)/this.length*3;
             this.tileHeight = this.tileWidth/1.5;

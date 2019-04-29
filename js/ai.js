@@ -20,7 +20,7 @@ function moveAIRecursive(index) {
 }
 
 function moveSingleAI(r) {
-	sout("Rider choice: " + r.choice);
+	//sout("Rider choice: " + r.choice);
 	if (r.choice == 92) {
 		//sout("Peloton: ATTACK!");
 		if (r.role == "r") {
@@ -72,9 +72,8 @@ function moveDraft() {
 }
 
 function checkFatigue() {
-	sout("-> checkig fatigue");
+	//sout("-> checkig fatigue");
 	var report = "";
-	//var racers = getRiderOrder();
 	human.forEach(r => {
 		if (track.matrix[r.pos[0] + 1][0] != "x" && r.pos[0] < finishLineAt) {
 			if (r.role == "s") {
@@ -91,7 +90,7 @@ function checkFatigue() {
 
 function getRiderOrder() {
 	var order = [];
-	for (var i = track.length - 1; i > 0; i--) {
+	for (var i = track.length - 1; i >= 0; i--) {
 		for (var j = 0; j < 2; j++) {
 			riders.forEach(rider => {
 				if (rider.pos[0] == i && rider.pos[1] == j) {
@@ -109,7 +108,11 @@ function checkFinished() {
 			riders.forEach(rider => {
 				if (rider.pos[0] == i && rider.pos[1] == j) {
 					ridersFinished.push(rider);
-					appendToElement("finalResult", ridersFinished.length + ": " + rider.name + " (" + turn + ")" + "<br>");
+					if (ridersFinished.length == 1) {
+						addToElement("finalResult", ridersFinished.length + ": " + rider.name + " (" + turn + ")" + "<br>");
+					} else {
+						appendToElement("finalResult", ridersFinished.length + ": " + rider.name + " (" + turn + ")" + "<br>");
+					}
 					removeFinished(rider);
 				}
 			});

@@ -51,7 +51,7 @@ function getPlayerChoice(riderID, move) {
         sBtn.disabled = true;
     }
     humanChoices++;
-
+    
     //check if both choices are down -> execute round
     if (humanChoices == human.length) {
         var riderOrder = getRiderOrder();
@@ -87,7 +87,7 @@ function newGame() {
     } else {
         riders = [];
         ridersFinished = [];
-        addToElement("finalResult", "");
+        addToElement("finalResult", "No riders finished yet.");
         track = new Track(5, 5, chosenTracks.pop());
         addToElement("track-name", track.name);
         trackLength = track.length;
