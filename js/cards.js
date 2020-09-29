@@ -1,6 +1,5 @@
 class Cards {
 
-    // TODO: riders of peloton should have a shared deck!
     constructor(type) {
         this.type = type;
         if (type == 'rouleur') {

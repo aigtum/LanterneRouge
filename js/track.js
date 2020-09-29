@@ -71,27 +71,69 @@ class Track {
         return trackProfile;
     }
 
-    addTileToTrack(i, j, tilesPerLength, lineNum, type) {
+    addTileToTrack(i, j, tilesPerLength, lineNum, direction, type) {
         var tile;
-        if (j == 0) {
-            tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3, this.tileWidth, this.tileHeight, [i, j], type);
-        } else if (j == 1) {
-            tile = new Tile(this.x + this.tileWidth * (i - tilesPerLength * (lineNum - 1)), this.y + this.tileHeight * (lineNum) * 3- this.tileHeight, this.tileWidth, this.tileHeight, [i, j], type);
+        if (direction == 1) {
+            if (j == 0) {
+                tile = new Tile(
+                    this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth,
+                    this.y*2 + (lineNum - 1) * this.tileHeight * 3.3 + this.tileHeight,
+                    this.tileWidth,
+                    this.tileHeight,
+                    [i, j],
+                    type);
+            } else if (j == 1) {
+                tile = new Tile(
+                    this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth,
+                    this.y*2 + (lineNum - 1) * this.tileHeight * 3.3,
+                    this.tileWidth,
+                    this.tileHeight,
+                    [i, j],
+                    type);
+            }
         }
+        if (direction == -1) {
+            if (j == 0) {
+                tile = new Tile(
+                    //((tilesPerLength-1) * this.tileWidth) + (this.x + ((tilesPerLength * this.tileWidth)) - (i + tilesPerLength * (lineNum - 1))*this.tileWidth),
+                    (tilesPerLength * this.tileWidth) - (this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
+                    this.y*2 + (lineNum - 1) * this.tileHeight * 3.3 + this.tileHeight,
+                    this.tileWidth,
+                    this.tileHeight,
+                    [i, j],
+                    type);
+            } else if (j == 1) {
+                tile = new Tile(
+                    tilesPerLength * this.tileWidth - (this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
+                    this.y*2 + (lineNum - 1) * this.tileHeight * 3.3,
+                    this.tileWidth,
+                    this.tileHeight,
+                    [i, j],
+                    type);            }
+        }
+        if ((i % (tilesPerLength) == 0) && i > 0 && i < this.length-1) {
+            print(this.length)
+            tile.corner = true;
+        }
+
+
         this.tiles[i][j] = tile;
+        
         return tile;
     }
 
     show(riders) {
-        var tilesPerLength = Math.floor(windowWidth / this.tileWidth);
+        var tilesPerLength = Math.floor(windowWidth / this.tileWidth - 1);
         var lineNum = 0;
         var tile;
+        let direction = -1
         for (var i = 0; i < this.trackProfile.length; i++) {
             if (i % tilesPerLength == 0) {
                 lineNum += 1;
+                direction *= -1;
             }
             for (var j = 0; j < 2; j++) {
-                tile = this.addTileToTrack(i, j, tilesPerLength, lineNum, this.trackProfile[i]);
+                tile = this.addTileToTrack(i, j, tilesPerLength, lineNum, direction, this.trackProfile[i]);
                 
                 tile.show();
                 
@@ -128,6 +170,7 @@ class Tile {
         this.height = height;
         this.num = num;
         this.type = type;
+        this.corner = false;
     }
 
     getTileType() {
@@ -135,6 +178,9 @@ class Tile {
     }
 
     show() {
+        if (this.corner == true) {
+            this.y -= this.height;
+        }
         if(this.num[0,1] == 0) {
             fill("green");
             rect(this.x, this.y+this.width/5, this.width, this.height);
@@ -142,6 +188,7 @@ class Tile {
             fill("green");
             rect(this.x, this.y-this.width/5, this.width, this.height);
         }
+        
         if (this.type == "s" || this.type == "f") {
             fill("yellow");
             rect(this.x, this.y, this.width, this.height);
@@ -161,8 +208,9 @@ class Tile {
             fill(220, 220, 220);
             rect(this.x, this.y, this.width, this.height);
         }
-        //fill("black");
-        //text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
+        
+        fill("black");
+        text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
 
         
     }

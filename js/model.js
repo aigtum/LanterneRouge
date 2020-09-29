@@ -88,7 +88,7 @@ function newGame() {
         riders = [];
         ridersFinished = [];
         addToElement("finalResult", "No riders finished yet.");
-        track = new Track(5, 5, chosenTracks.pop());
+        track = new Track(30, 10, chosenTracks.pop());
         addToElement("track-name", track.name);
         trackLength = track.length;
         startLineAt = track.startLineAt;

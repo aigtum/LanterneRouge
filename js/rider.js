@@ -22,6 +22,7 @@ class Rider {
         this.role = role;
         this.pos = pos;
         this.cards = cards;
+        this.usedCards = [];
         this.control = control;
         this.color = color;
 
