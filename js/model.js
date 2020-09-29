@@ -39,6 +39,7 @@ function getPlayerChoice(riderID, move) {
     //var sModal = document.getElementById('mySprinteurModal');
     //var rModal = document.getElementById('myRouleurModal');
 
+    addToElement("movement", "");
     // put new choice into choices
     var riderObj = getRiderById(riderID);
     riderObj.setChoice(move);
@@ -57,12 +58,19 @@ function getPlayerChoice(riderID, move) {
         var riderOrder = getRiderOrder();
         for (rider of riderOrder) {
             if (rider.control == "player") {
-                rider.move(rider.choice, riders, track);
+                //rider.move(rider.choice, riders, track);
             }
         }
         humanChoices = 0;
         endRound();
     }
+    if (riderID == 1) {
+        appendToElement("r_deck", move + " ");
+    }
+    if (riderID == 2) {
+        appendToElement("s_deck", move + " ");
+    }
+
 }
 
 
@@ -131,7 +139,7 @@ function newRound() {
             sBtn.disabled = false;
         }
     }
-
+    
     showRiderInfo();
     for (var rider of riders) {
         if (rider.control == "player") {

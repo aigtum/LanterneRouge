@@ -51,11 +51,26 @@ class Rider {
     }
 
     addCards(cards) {
-        if (cards.length == 1) {
-            this.deck.addCardsToDeck(cards);
-        } else {
+        if (this.deck.deck.length == 0 && this.usedCards.length == 0) {
+            print("Deck empty - refilling");
+            this.deck.addNewCardsToDeck(this.cards);
+        } else if (this.deck.deck.length == 0 && this.usedCards.length > 0) {
+            for (c of this.usedCards) {
+                this.deck.addCardsToDeck(c);
+            }
+        } else if (this.deck.deck.length < 4) {
+            print(this.deck.deck.length + " :Less than 4 cards available - shuffling used");
+            for (c of this.usedCards) {
+                this.deck.addCardsToDeck(c);
+            }
             for (c of cards) {
                 this.deck.addCardsToDeck(c);
+            }
+            this.deck.shuffle();
+            this.usedCards = [];
+        } else {
+            for (c of cards) {
+                this.usedCards.push(c);
             }
         }
     }
@@ -89,18 +104,18 @@ class Rider {
     }
 
     checkBusy(pos, riders) {
-        console.log("> Checking: " + this.name + ", " + pos);
+        //console.log("> Checking: " + this.name + ", " + pos);
         var counter = 0;
         for (var i = 0; i < riders.length; i++) {
             //console.log(i + " riders position: " + riders[i].pos + " own position: " + pos);
             if (riders[i].pos[0] == pos[0] && riders[i].pos[1] == pos[1] && pos[1] == 0) {
-                console.log("blocked down");
+                //console.log("blocked down");
                 return this.checkBusy([parseInt(pos[0]), 1], riders);
             } else if (riders[i].pos[0] == pos[0] && riders[i].pos[1] == pos[1] && pos[1] == 1) {
-                console.log("blocked up");
+                //console.log("blocked up");
                 return this.checkBusy([parseInt(pos[0]) - 1, 0], riders);
             } else if (counter == riders.length - 1) {
-                console.log(">Setting: " + pos);
+                //console.log(">Setting: " + pos);
                 return pos;
             }
             counter++;
@@ -109,7 +124,7 @@ class Rider {
 
     move(s, riders, track, type) {
         var steps = parseInt(s);
-        sout("Moving: " + this.name + ", " + steps + ", " + this.deck);
+        sout("Moving: " + this.name + ", " + steps + ", " + this.deck.deck);
         var currPos = this.pos[0];
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
         var newPos = [currPos + steps, 0];
@@ -140,7 +155,7 @@ class Rider {
             this.move(0, riders, track);
         }
         this.checkFinished(track);
-        sout("__________" + "\n" + track.matrix +"\n__________");
+        //sout("__________" + "\n" + track.matrix +"\n__________");
     }
 
     show(x, y) {

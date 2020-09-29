@@ -82,10 +82,12 @@ function update() {
 function showRiderInfo() {
     for (var rider of human) {
         if (rider.role == "r") {
-            addToElement("rInfo", "Rouleur " + "(" + rider.deck.deck.length + ")");
+            addToElement("rInfo", "Rouleur " + "(" + (rider.deck.deck.length + rider.usedCards.length) + ")");
+            //addToElement("r_deck", rider.deck.deck + "/" + rider.usedCards);
         }
         if (rider.role == "s") {
-            addToElement("sInfo", "Sprinteur " + "(" + rider.deck.deck.length + ")");
+            addToElement("sInfo", "Sprinteur " + "(" + (rider.deck.deck.length + rider.usedCards.length) + ")");
+            //addToElement("s_deck", rider.deck.deck + "/" + rider.usedCards);
         }
     }
 }

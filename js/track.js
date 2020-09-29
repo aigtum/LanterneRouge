@@ -96,7 +96,7 @@ class Track {
             if (j == 0) {
                 tile = new Tile(
                     //((tilesPerLength-1) * this.tileWidth) + (this.x + ((tilesPerLength * this.tileWidth)) - (i + tilesPerLength * (lineNum - 1))*this.tileWidth),
-                    (tilesPerLength * this.tileWidth) - (this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
+                    (tilesPerLength * this.tileWidth) - ((i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
                     this.y*2 + (lineNum - 1) * this.tileHeight * 3.3 + this.tileHeight,
                     this.tileWidth,
                     this.tileHeight,
@@ -104,7 +104,7 @@ class Track {
                     type);
             } else if (j == 1) {
                 tile = new Tile(
-                    tilesPerLength * this.tileWidth - (this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
+                    tilesPerLength * this.tileWidth - ((i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
                     this.y*2 + (lineNum - 1) * this.tileHeight * 3.3,
                     this.tileWidth,
                     this.tileHeight,
@@ -112,7 +112,6 @@ class Track {
                     type);            }
         }
         if ((i % (tilesPerLength) == 0) && i > 0 && i < this.length-1) {
-            print(this.length)
             tile.corner = true;
         }
 
@@ -181,36 +180,44 @@ class Tile {
         if (this.corner == true) {
             this.y -= this.height;
         }
-        if(this.num[0,1] == 0) {
-            fill("green");
-            rect(this.x, this.y+this.width/5, this.width, this.height);
-        } else {
-            fill("green");
-            rect(this.x, this.y-this.width/5, this.width, this.height);
-        }
         
         if (this.type == "s" || this.type == "f") {
+            stroke("black");
             fill("yellow");
             rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "u") {
+            stroke("black");
             fill("salmon");
             rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "d") {
+            stroke("black");
             fill(64, 64, 182);
             rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "c") {
+            stroke("black");
             fill(200, 200, 100);
             rect(this.x, this.y, this.width, this.height);
         } else if (this.type == "r") {
-            stroke("lightblue");
+            stroke("black");
+            fill("lightblue");
             rect(this.x, this.y, this.width, this.height);
         } else {
+            stroke("black");
             fill(220, 220, 220);
             rect(this.x, this.y, this.width, this.height);
         }
+        if(this.num[0,1] == 0) {
+            stroke("green");
+            fill("green");
+            rect(this.x, this.y+this.height, this.width, this.height/3.5);
+        } else {
+            stroke("green");
+            fill("green");
+            rect(this.x, this.y-this.height/3.5, this.width, this.height/3.5);
+        }
         
-        fill("black");
-        text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
+        //fill("black");
+        //text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
 
         
     }

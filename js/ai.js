@@ -5,8 +5,6 @@
 function moveAIRecursive(index) {
 	if (index == riders.length) {
 		return Promise.resolve();
-	} else if (riders[index].control == "player") {
-		return moveAIRecursive(index + 1);
 	} else {
 		return new Promise((resolve, reject) => {
 			setTimeout(function () {
@@ -31,6 +29,7 @@ function moveSingleAI(r) {
 	} else {
 		r.move(r.choice, riders, track);
 	}
+	appendToElement("movement", r.name + ": " + r.choice + "<br>");
 }
 
 function updateDraft(index) {
