@@ -81,7 +81,9 @@ class Track {
                     this.tileWidth,
                     this.tileHeight,
                     [i, j],
-                    type);
+                    type,
+                    direction
+                    );
             } else if (j == 1) {
                 tile = new Tile(
                     this.x + (i - tilesPerLength * (lineNum - 1)) * this.tileWidth,
@@ -89,7 +91,9 @@ class Track {
                     this.tileWidth,
                     this.tileHeight,
                     [i, j],
-                    type);
+                    type,
+                    direction
+                );
             }
         }
         if (direction == -1) {
@@ -101,7 +105,9 @@ class Track {
                     this.tileWidth,
                     this.tileHeight,
                     [i, j],
-                    type);
+                    type,
+                    direction
+                    );
             } else if (j == 1) {
                 tile = new Tile(
                     tilesPerLength * this.tileWidth - ((i - tilesPerLength * (lineNum - 1)) * this.tileWidth)-(this.tileWidth*0.153),
@@ -109,7 +115,10 @@ class Track {
                     this.tileWidth,
                     this.tileHeight,
                     [i, j],
-                    type);            }
+                    type,
+                    direction
+                    );            
+            }
         }
         if ((i % (tilesPerLength) == 0) && i > 0 && i < this.length-1) {
             tile.corner = true;
@@ -162,7 +171,7 @@ class Tile {
      * c = cobblestone
      * r = refill/supply zones
      */
-    constructor(x, y, width, height, num, type) {
+    constructor(x, y, width, height, num, type, direction) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -170,42 +179,34 @@ class Tile {
         this.num = num;
         this.type = type;
         this.corner = false;
+        this.direction = direction;
     }
 
     getTileType() {
         return this.type;
     }
 
-    show() {
+    addCorner() {
         if (this.corner == true) {
-            this.y -= this.height;
+            if (this.direction == -1) {
+                if (this.num[1] == 0) {
+                    rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 360, 0);
+                } 
+                if (this.num[1] == 1) {
+                    rect(this.x+this.width*0.7, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 0, 90, 0, 0);
+                }
+            } else {
+                if (this.num[1] == 0) {
+                    rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 0, 30);
+                } 
+                if (this.num[1] == 1) {
+                    rect(this.x, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 90, 0, 0, 0);
+                }
+            }
         }
-        
-        if (this.type == "s" || this.type == "f") {
-            stroke("black");
-            fill("yellow");
-            rect(this.x, this.y, this.width, this.height);
-        } else if (this.type == "u") {
-            stroke("black");
-            fill("salmon");
-            rect(this.x, this.y, this.width, this.height);
-        } else if (this.type == "d") {
-            stroke("black");
-            fill(64, 64, 182);
-            rect(this.x, this.y, this.width, this.height);
-        } else if (this.type == "c") {
-            stroke("black");
-            fill(200, 200, 100);
-            rect(this.x, this.y, this.width, this.height);
-        } else if (this.type == "r") {
-            stroke("black");
-            fill("lightblue");
-            rect(this.x, this.y, this.width, this.height);
-        } else {
-            stroke("black");
-            fill(220, 220, 220);
-            rect(this.x, this.y, this.width, this.height);
-        }
+    }
+
+    addGrass() {
         if(this.num[0,1] == 0) {
             stroke("green");
             fill("green");
@@ -215,6 +216,54 @@ class Tile {
             fill("green");
             rect(this.x, this.y-this.height/3.5, this.width, this.height/3.5);
         }
+    }
+
+    show() {
+        
+        if (this.corner == true) {
+            this.y -= this.height;
+        }
+        this.addGrass();
+        
+        if (this.type == "s" || this.type == "f") {
+            stroke("black");
+            fill("yellow");
+            this.addCorner(this.corner, this.x, this.y, this.width, this.height);
+            rect(this.x, this.y, this.width, this.height);
+        } else if (this.type == "u") {
+            stroke("black");
+            fill("salmon");
+            this.addCorner(this.corner, this.x, this.y, this.width, this.height);
+            rect(this.x, this.y, this.width, this.height);
+        } else if (this.type == "d") {
+            stroke("black");
+            fill(64, 64, 182);
+            this.addCorner(this.corner, this.x, this.y, this.width, this.height);
+            rect(this.x, this.y, this.width, this.height);
+        } else if (this.type == "c") {
+            stroke("black");
+            fill(200, 200, 100);
+            this.addCorner(this.corner, this.x, this.y, this.width, this.height);
+            rect(this.x, this.y, this.width, this.height);
+        } else if (this.type == "r") {
+            stroke("black");
+            fill("lightblue");
+            this.addCorner(this.corner, this.x, this.y, this.width, this.height);
+            rect(this.x, this.y, this.width, this.height);
+        } else {
+            stroke("black");
+            fill(220, 220, 220);
+            this.addCorner(this.corner, this.x, this.y, this.width, this.height);
+            stroke("black");
+            rect(this.x, this.y, this.width, this.height);
+        }
+
+        
+        
+        
+        
+        
+        
         
         //fill("black");
         //text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
