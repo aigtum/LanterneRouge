@@ -3,7 +3,7 @@ body {
     color: white;
     text-shadow: 2px 2px 0 black;
     background-repeat: no-repeat;
-    background: url("../static/paper.jpg");
+    background-color: rgb(20, 80, 60);
     background-size: 100%;
     width: 100%;
 }
@@ -14,8 +14,6 @@ h1 {
     font-size: 3.5em;
     margin-top: 0;
     padding-top: 1em;
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: rgb(109, 9, 9);
 }
 
 a {
@@ -23,7 +21,9 @@ a {
 }
 
 .top {
+    color: whitesmoke;
     background-image: url('../static/header1.jpg');
+    text-shadow: 4px 4px 1px rgb(109, 9, 9);
     height: 10%;
     width: 100%;
     background-position-y: 20%;

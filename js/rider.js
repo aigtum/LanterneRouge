@@ -51,10 +51,10 @@ class Rider {
     }
 
     addCards(cards) {
-        if (this.deck.deck.length == 0 && this.usedCards.length == 0) {
+        if (this.deck.deck.length == 0 && this.usedCards.length == 0) { // No cards left
             print("Deck empty - refilling");
             this.deck.addNewCardsToDeck(this.cards);
-        } else if (this.deck.deck.length == 0 && this.usedCards.length > 0) {
+        } else if (this.deck.deck.length == 0 && this.usedCards.length > 0) { // Only used cards left, typically when less than 4 total
             for (c of this.usedCards) {
                 this.deck.addCardsToDeck(c);
             }
@@ -63,9 +63,9 @@ class Rider {
             for (c of this.usedCards) {
                 this.deck.addCardsToDeck(c);
             }
-            for (c of cards) {
-                this.deck.addCardsToDeck(c);
-            }
+            // for (c of cards) {
+            //     this.deck.addCardsToDeck(c);
+            // }
             this.deck.shuffle();
             this.usedCards = [];
         } else {
@@ -92,7 +92,10 @@ class Rider {
     // TODO: put cards back in deck
     setChoice(choice) {
         this.choice = choice;
-        this.hand.splice(this.hand.indexOf(choice) - 1, 1);
+        console.log("--->", this.hand, this.hand.indexOf(choice), this.hand.indexOf(this.choice))
+        console.log("Splicing: ", this.choice, choice)
+        this.hand.splice(this.hand.indexOf(choice), 1);
+        console.log("--->", this.hand, this.hand.indexOf(choice), this.hand.indexOf(this.choice))
         this.addCards(this.hand);
     }
 

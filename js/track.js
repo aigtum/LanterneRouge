@@ -189,19 +189,19 @@ class Tile {
     addCorner() {
         if (this.corner == true) {
             if (this.direction == -1) {
-                if (this.num[1] == 0) {
-                    rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 360, 0);
-                } 
-                if (this.num[1] == 1) {
-                    rect(this.x+this.width*0.7, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 0, 90, 0, 0);
-                }
+                // if (this.num[1] == 0) {
+                //     rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 360, 0);
+                // } 
+                // if (this.num[1] == 1) {
+                //     rect(this.x+this.width*0.7, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 0, 90, 0, 0);
+                // }
             } else {
-                if (this.num[1] == 0) {
-                    rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 0, 30);
-                } 
-                if (this.num[1] == 1) {
-                    rect(this.x, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 90, 0, 0, 0);
-                }
+                // if (this.num[1] == 0) {
+                //     rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 0, 30);
+                // } 
+                // if (this.num[1] == 1) {
+                //     rect(this.x, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 90, 0, 0, 0);
+                // }
             }
         }
     }
