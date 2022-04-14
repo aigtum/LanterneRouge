@@ -81,7 +81,7 @@ function checkFatigue() {
 			if (r.role == "r") {
 				report += "Rouleur received a fatigue card! ";
 			}
-			r.addCards('f');
+			r.deck.usedCards.push('f');
 		}
 	});
 	addToReport(report);

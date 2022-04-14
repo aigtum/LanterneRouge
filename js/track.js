@@ -1,9 +1,9 @@
 /**
- * Track 
+ * Track
  */
 
 class Track {
-    
+
     constructor(x, y, set) {
         this.name = set[0];
         this.set = set[1];
@@ -57,7 +57,7 @@ class Track {
                 }
                 counter++;
             }
-        } 
+        }
         return [counter, startLine, counter-finishLine];
     }
 
@@ -117,7 +117,7 @@ class Track {
                     [i, j],
                     type,
                     direction
-                    );            
+                    );
             }
         }
         if ((i % (tilesPerLength) == 0) && i > 0 && i < this.length-1) {
@@ -126,7 +126,7 @@ class Track {
 
 
         this.tiles[i][j] = tile;
-        
+
         return tile;
     }
 
@@ -142,9 +142,9 @@ class Track {
             }
             for (var j = 0; j < 2; j++) {
                 tile = this.addTileToTrack(i, j, tilesPerLength, lineNum, direction, this.trackProfile[i]);
-                
+
                 tile.show();
-                
+
                 riders.reverse().forEach(rider => {
                     if (i == rider.pos[0] && j == rider.pos[1]) {
                         this.riderOrder.push(rider);
@@ -154,7 +154,7 @@ class Track {
                         this.matrix[i][j] = '_';
                     }
                 });
-                
+
             }
         }
     }
@@ -191,14 +191,14 @@ class Tile {
             if (this.direction == -1) {
                 // if (this.num[1] == 0) {
                 //     rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 360, 0);
-                // } 
+                // }
                 // if (this.num[1] == 1) {
                 //     rect(this.x+this.width*0.7, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 0, 90, 0, 0);
                 // }
             } else {
                 // if (this.num[1] == 0) {
                 //     rect(this.x, this.y-this.height*0.3, this.width, this.height*2.3, 0, 0, 0, 30);
-                // } 
+                // }
                 // if (this.num[1] == 1) {
                 //     rect(this.x, this.y-2.3*this.height, this.width*0.3, this.height*3.3, 90, 0, 0, 0);
                 // }
@@ -219,12 +219,12 @@ class Tile {
     }
 
     show() {
-        
+
         if (this.corner == true) {
             this.y -= this.height;
         }
         this.addGrass();
-        
+
         if (this.type == "s" || this.type == "f") {
             stroke("black");
             fill("yellow");
@@ -258,16 +258,16 @@ class Tile {
             rect(this.x, this.y, this.width, this.height);
         }
 
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
         //fill("black");
         //text(this.num[0], this.x + this.width / 2 + 2, this.y + this.height / 2 + 2);
 
-        
+
     }
 }

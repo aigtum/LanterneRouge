@@ -21,8 +21,6 @@ class Rider {
         this.y = y;
         this.role = role;
         this.pos = pos;
-        this.cards = cards;
-        this.usedCards = [];
         this.control = control;
         this.color = color;
 
@@ -50,31 +48,6 @@ class Rider {
         }
     }
 
-    addCards(cards) {
-        if (this.deck.deck.length == 0 && this.usedCards.length == 0) { // No cards left
-            print("Deck empty - refilling");
-            this.deck.addNewCardsToDeck(this.cards);
-        } else if (this.deck.deck.length == 0 && this.usedCards.length > 0) { // Only used cards left, typically when less than 4 total
-            for (c of this.usedCards) {
-                this.deck.addCardsToDeck(c);
-            }
-        } else if (this.deck.deck.length < 4) {
-            print(this.deck.deck.length + " :Less than 4 cards available - shuffling used");
-            for (c of this.usedCards) {
-                this.deck.addCardsToDeck(c);
-            }
-            // for (c of cards) {
-            //     this.deck.addCardsToDeck(c);
-            // }
-            this.deck.shuffle();
-            this.usedCards = [];
-        } else {
-            for (c of cards) {
-                this.usedCards.push(c);
-            }
-        }
-    }
-
     moveDown(pos, track) {
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
         this.pos = [pos[0], 0];
@@ -89,22 +62,13 @@ class Rider {
         //sout(track.matrix);
     }
 
-    // TODO: put cards back in deck
     setChoice(choice) {
-        this.choice = choice;
-        console.log("--->", this.hand, this.hand.indexOf(choice), this.hand.indexOf(this.choice))
-        console.log("Splicing: ", this.choice, choice)
-        this.hand.splice(this.hand.indexOf(choice), 1);
-        console.log("--->", this.hand, this.hand.indexOf(choice), this.hand.indexOf(this.choice))
-        this.addCards(this.hand);
+        this.choice = parseInt(choice);
+        this.hand.splice(this.hand.indexOf(this.choice), 1);
+        this.deck.burntCards.push(this.choice);
+        this.deck.addCards(this.hand);
     }
 
-    getChoice() {
-        if (control == "player") {
-            this.choice = deck.drawOneCard()
-        }
-        return this.choice
-    }
 
     checkBusy(pos, riders) {
         //console.log("> Checking: " + this.name + ", " + pos);
@@ -127,7 +91,7 @@ class Rider {
 
     move(s, riders, track, type) {
         var steps = parseInt(s);
-        sout("Moving: " + this.name + ", " + steps + ", " + this.deck.deck);
+        //sout("Moving: " + this.name + ", " + steps + ", " + this.deck.deck);
         var currPos = this.pos[0];
         track.matrix[this.pos[0]][this.pos[1]] = ["_", "_"];
         var newPos = [currPos + steps, 0];
@@ -173,7 +137,7 @@ class Rider {
         if (this.control == "peloton") {
             if (this.color == "Red") {
                 fill("black");
-                text("p" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
+                text("" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
             } else {
                 fill("white");
                 text("p" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
@@ -182,19 +146,19 @@ class Rider {
         } else if (this.control == "muscle1" || this.control == "muscle2") {
             if (this.color == "Red") {
                 fill("black");
-                text("m" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
+                text("💪" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
             } else {
                 fill("white");
-                text("m" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
+                text("💪" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
             }
             textAlign('center', 'center');
         } else {
             if (this.color == "Red") {
                 fill("black");
-                text(this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
+                text("🚴‍♀️" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
             } else {
                 fill("white");
-                text(this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
+                text("🚴‍♀️" + this.role, x + this.width / 2 + 2, y + this.height / 2 + 2);
             }
             textAlign('center', 'center');
         }

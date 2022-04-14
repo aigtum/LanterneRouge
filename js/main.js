@@ -6,9 +6,9 @@
  * Setup:
  * 1) Set up board
  * 2) put riders in their places
- * 3) shuffle decks 
- * 
- * 
+ * 3) shuffle decks
+ *
+ *
  * New round:
  * 1) draw 4 cards from deck (depending on type) -> put in hand -> show to user
  * 2) choose one card from each hand
@@ -24,8 +24,8 @@ const sleep = (milliseconds) => {
 }
 
 
-function putHandInDeck(hand, type) {
-	for (var i = 0; i < hand.length; i++) {
-		type.push(hand[i]);
-	}
-}
+// function putHandInDeck(hand, type) {
+// 	for (var i = 0; i < hand.length; i++) {
+// 		type.push(hand[i]);
+// 	}
+// }

@@ -52,15 +52,15 @@ function getPlayerChoice(riderID, move) {
         sBtn.disabled = true;
     }
     humanChoices++;
-    
+
     //check if both choices are down -> execute round
     if (humanChoices == human.length) {
-        var riderOrder = getRiderOrder();
-        for (rider of riderOrder) {
-            if (rider.control == "player") {
-                //rider.move(rider.choice, riders, track);
-            }
-        }
+        // var riderOrder = getRiderOrder();
+        // for (rider of riderOrder) {
+        //     if (rider.control == "player") {
+        //         rider.move(rider.choice, riders, track);
+        //     }
+        // }
         humanChoices = 0;
         endRound();
     }
@@ -139,7 +139,7 @@ function newRound() {
             sBtn.disabled = false;
         }
     }
-    
+
     showRiderInfo();
     for (var rider of riders) {
         if (rider.control == "player") {

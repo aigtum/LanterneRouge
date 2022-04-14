@@ -3,12 +3,18 @@ function sout(text) {
     console.log(text);
 }
 
+function preload() {
+    //redR = loadImage("https://media0.giphy.com/media/H7SxLvSW1ge3bD8xUc/giphy.gif?cid=6c09b9527d1d8a5f9ebd9d0d6cf310417cb3bce23cd7a2f7&rid=giphy.gif&ct=s")
+
+}
+
 function setup() {
     let myCanvas = createCanvas(windowWidth, windowHeight / 1.5);
     myCanvas.parent('gameBoard');
     background(202, 173, 137, 0.692);
     frameRate(5);
     choiceMade = false;
+
 }
 
 function draw() {
@@ -82,12 +88,12 @@ function update() {
 function showRiderInfo() {
     for (var rider of human) {
         if (rider.role == "r") {
-            addToElement("rInfo", "Rouleur " + "(" + (rider.deck.deck.length + rider.usedCards.length) + ")");
-            //addToElement("r_deck", rider.deck.deck + "/" + rider.usedCards);
+            addToElement("rInfo", "Rouleur " + "(" + (rider.deck.deck.length + rider.deck.usedCards.length) + ")");
+            //addToElement("r_deck", rider.deck.deck + "/" + rider.deck.usedCards);
         }
         if (rider.role == "s") {
-            addToElement("sInfo", "Sprinteur " + "(" + (rider.deck.deck.length + rider.usedCards.length) + ")");
-            //addToElement("s_deck", rider.deck.deck + "/" + rider.usedCards);
+            addToElement("sInfo", "Sprinteur " + "(" + (rider.deck.deck.length + rider.deck.usedCards.length) + ")");
+            //addToElement("s_deck", rider.deck.deck + "/" + rider.deck.usedCards);
         }
     }
 }
