@@ -22,7 +22,7 @@
     <script src="./js/gui.js"></script>
     <script src="./js/cards.js"></script>
     <script src="./js/ai.js"></script>
-    <script src="./js/model.js"></script>
+    <script src="./js/utils.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/track.js"></script>
     <script src="./js/rider.js"></script>
@@ -68,7 +68,7 @@
 
 
     <div class="game" id="game" hidden>
-        
+
         <div class="cards">
             <button class="alt-button" id="myRaceBtn">View Race Standing</button>
             <button class="alt-button" id="myTourBtn">View Tour Standing</button>
@@ -118,13 +118,13 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="info">
             <div id="report"></div>
         </div>
-        
+
         <div id="gameBoard"></div>
-        
+
         <div class="frame">
             <p>
                 Rouleur: <div id="r_deck"></div>
@@ -133,7 +133,7 @@
                 Sprinteur: <div id="s_deck"></div>
             </p>
         </div>
-        
+
         <div class="frame" style="min-height: 12em;">
             <div class="info">
                 <p>Movement previous round:</p>
@@ -223,16 +223,16 @@
                     <h2>Rules:</h2>
                     <h3>Overview:</h3>
                     <p>
-                        Flamme Rouge is a bicycle racing game where each player controls two riders: a Rouleur(r) a Sprinteur(s). 
+                        Flamme Rouge is a bicycle racing game where each player controls two riders: a Rouleur(r) a Sprinteur(s).
                         The players' goal is to be the first to cross the finish line with one of their riders.
                         The setup is done automatically and the track is chosen randomly from a number of available tracks.
                     </p>
                     <h3>Playing the game:</h3>
                     <p>
                         Four cards are drawn for each rider and the player chooses 1 card from each hand. The card represents the
-                        number of squared the selected rider can move that round. Once this is done, the riders are 
+                        number of squared the selected rider can move that round. Once this is done, the riders are
                         moved according to the rules of the game. Once the cards have been chosen, player controlled riders are moved,
-                        followed by AI-contolled ones. Once that is done, slipstreaming and exhausion is applied.
+                        followed by AI-contolled ones. Once that is done, slipstreaming and exhaustion is applied.
                     </p>
                     <p>
                         * A rider cannot be moved into a position occupied by another rider.
@@ -242,12 +242,12 @@
                     </p>
                     <h3>Slipstreaming and Exhaustion</h3>
                     <p>
-                        Slipstreaming is done by moving each pack (one or more riders with no empty spaces between them) of riders 
+                        Slipstreaming is done by moving each pack (one or more riders with no empty spaces between them) of riders
                         one square forward if the distance to the next pack is exactly 1 square.
                     </p>
                     <p>
                         After slipstreaming has been applied, every rider in the head of its pack (in both left and right lane) receives
-                        an exhausiton card (a 2-card with red background). The exhaustion cards are used like the regular 2-cards.
+                        an exhaustion card (a 2-card with red background). The exhaustion cards are used like the regular 2-cards.
                     </p>
                     <h3>Mountains and Downhill</h3>
                     <p>
@@ -260,7 +260,7 @@
                         a rider on a red sqare can neither give nor receive slipstreaming.
                     </p>
                     <p>
-                        Downhill: if a rider starts a turn on a blue square, his card always counts as a minimun og 5. A lower value 
+                        Downhill: if a rider starts a turn on a blue square, his card always counts as a minimun og 5. A lower value
                         can be played, but its values is always a minimum 5. Slipstreaming is awarded as normal.
                     </p>
                     <h3>Tour and Points</h3>
