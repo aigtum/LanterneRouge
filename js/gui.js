@@ -98,7 +98,7 @@ function showRiderInfo() {
           (rider.deck.deck.length + rider.deck.usedCards.length) +
           ")"
       );
-      //addToElement("r_deck", rider.deck.deck + "/" + rider.deck.usedCards);
+      addToElement("r_deck", rider.deck.burntCards);
     }
     if (rider.role == "s") {
       addToElement(
@@ -108,7 +108,7 @@ function showRiderInfo() {
           (rider.deck.deck.length + rider.deck.usedCards.length) +
           ")"
       );
-      //addToElement("s_deck", rider.deck.deck + "/" + rider.deck.usedCards);
+      addToElement("s_deck", rider.deck.burntCards);
     }
   }
 }

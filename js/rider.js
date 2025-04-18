@@ -45,7 +45,6 @@ class Rider {
 
   getNewHand() {
     this.hand = this.deck.drawCards();
-    this.deck.addCards(this.hand);
   }
 
   getNewCard() {
@@ -77,8 +76,13 @@ class Rider {
 
   setChoice(choice) {
     this.choice = parseInt(choice);
+    // Remove the chosen card from hand and add it to burnt cards
     this.hand.splice(this.hand.indexOf(this.choice), 1);
     this.deck.burntCards.push(this.choice);
+
+    // Add the remaining 3 cards to used cards
+    this.deck.addCards(this.hand);
+    this.hand = []; // Clear the hand after the round
   }
 
   checkBusy(pos, riders) {

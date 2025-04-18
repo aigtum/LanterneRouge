@@ -51,7 +51,6 @@ class Cards {
 
   drawOneCard() {
     var result = this.deck.pop();
-    //this.deck.unshift(result);
     sout(
       "--- Drawing cards: " +
         this.type +
@@ -68,44 +67,56 @@ class Cards {
 
   addCards(cards) {
     print("Cards: " + cards);
-    if (this.deck.length == 0 && this.usedCards.length == 0) {
-      // No cards left
-      print("Deck empty - refilling");
-      this.addNewCardsToDeck(this.type);
-    } else if (
-      this.deck.length < 4 &&
-      this.usedCards.length + cards.length > 0
-    ) {
+
+    // Add all cards to used cards pile
+    for (let card of cards) {
+      this.usedCards.push(card);
+    }
+
+    print(
+      "Deck: ",
+      this.deck,
+      " / Used: ",
+      this.usedCards,
+      " / Burnt: ",
+      this.burntCards
+    );
+  }
+
+  drawCards() {
+    var hand = [];
+
+    // If we don't have enough cards in the deck, try to refill from used cards
+    if (this.deck.length < 4 && this.usedCards.length > 0) {
       print(
         "ROLE: ",
         this.type,
         "Less than 4 cards available - shuffling used"
       );
 
-      for (c of cards) {
-        this.deck.push(c);
-      }
+      // Shuffle used cards back into deck
       for (c of this.usedCards) {
         this.deck.push(c);
       }
       this.shuffle();
 
+      // Clear used cards after shuffling them back
       this.usedCards = [];
-    } else {
-      for (c of cards) {
-        this.usedCards.push(c);
-      }
-      print("Putting hand in used ->", this.deck, " / ", this.usedCards);
     }
-  }
 
-  drawCards() {
-    var hand = [];
+    // If we still don't have enough cards, create a new deck
+    if (this.deck.length < 4) {
+      print("Deck empty - refilling");
+      this.deck = this.addNewCardsToDeck(this.type, this.exhaustion);
+      this.shuffle();
+    }
+
+    // Draw 4 cards
     for (var i = 0; i < 4; i++) {
       hand.push(this.deck[i]);
     }
     this.deck.splice(0, 4);
-    //sout("--- Drawing cards: " + this.type +", " + hand + "/" + this.deck);
+
     return hand;
   }
 }
